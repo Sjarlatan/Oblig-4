@@ -1,3 +1,4 @@
+import java.util.Iterator;
 class Benjamin4 {
     public static void main(String args[]) {
 	System.out.println("LOLOLOLOLOL");
@@ -196,53 +197,26 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 	return new SingelIterator();
     }
 
-        class SingelIterator implements Iterator<V> {
-		
-		Lelem forste;
-		Lelem neste;
-		boolean ringForrige=false;
-		
-		SingelIterator() {
-			neste=hode;
-			forrige=hode;
-		}
-		
-		
-		public boolean hasNext() {
-			
-			return neste.neste != null;
-		}
-
-		
-		public T next() {
-			
-			Node temp;
-			ringForrige=true;
-			if(forrige ==hode) {
-				temp =neste.neste;
-				neste= neste.neste;
-			}else{
-				temp=hode.neste.neste;
-				forrige=neste;
-				neste=neste.neste;
-			}
-			forrige=neste;
-			neste=neste.neste;
-			
-			return temp.verdi;
-		}
-
-		
-		public void remove() {
-			if(ringForrige) {
-				ringForrige=false;
-				forrige.neste=forrige.neste.neste;
-			}else{
-				throw new IllegalStateException();
-			}
-		}
-		
+    class SingelIterator implements Iterator<V> {
+	SingelIterator() {
+	    //neste=hode;
+	    //	forrige=hode;
+	    System.out.println("Lol");
 	}
+	public V next() {
+	     System.out.println("Lol1");
+	     return null;
+	}
+
+	public boolean hasNext() {
+	     System.out.println("Lol2");
+	     return false;
+	}
+
+	public void remove() {
+	     System.out.println("Lol3");
+	}
+    }
 
 }
 
