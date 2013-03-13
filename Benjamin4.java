@@ -27,7 +27,10 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
     int antall = 0;
 
     private Lelem forste;
-    //private Lelem siste;
+
+    public SELLbeholder() {
+	System.out.println("TEST");
+    }
 
     private class Lelem {
 	Lelem neste;
@@ -98,7 +101,7 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 
     public V hent(N n)  {
 	for (Lelem en = forste; en!=null; en=en.neste) {
-	    if (en.nokkel.compareTo(n) != 0) {
+	    if (en.nokkel.compareTo(n) == 0) {
 		return en.verdi;//Eller nokkel?
 	    } 
 	}
@@ -106,14 +109,33 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
     }
 
     public V hent(int nr) {
+	int teller = 0;
+	if (nr > antall) {
+	    return null;
+	}
+	for (Lelem en = forste; en!=null; en=en.neste) {
+	    teller++; 
+	    if (teller == nr) {
+		return en.verdi;
+	    }
+	}
 	return null;
     }
 
     public V hentMinste() {
-	return null;
+	if (forste != null) {
+	return forste.verdi;
+	} else {
+	    return null;
+	}
     }
 
     public V hentStorste() {
+	for (Lelem en = forste; en!=null; en=en.neste) {
+	    if (en.neste == null) {
+		return en.verdi;
+	    }
+	}
 	return null;
     }
 
@@ -127,16 +149,101 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
     }
 
     public boolean fjernElement(N n) {
+	if (inneholder(n)) {
+	    //Hvis forste skal ut. Kast ut forste.
+	    if (forste.nokkel.compareTo(n) == 0) {
+		forste = forste.neste;
+		antall--;
+		return true;
+	    }
+	    //Hvis ikke...
+	    for (Lelem en = forste; en!=null; en=en.neste) {
+		if(en.neste.nokkel.compareTo(n) == 0) {
+		    en.neste = en.neste.neste;//Hvis det er den siste som fjernes, resirkuleres dens null til den sistemann.
+		    antall--;
+		    return true;
+		} 
+	    }
+	}
 	return false;
     }
 
     public void fjernAlle() {
+
+	if (forste==null) {
+	    return;
+	}
+
+	forste=null;
+	antall=0;
+
 	return;
     }
 
     public V[] tilArray(V[] a) {
-	return null;
+	if (forste==null) {
+	    return null;
+	}
+	int aTeller=0;
+	for (Lelem en = forste; en!=null; en=en.neste) {
+	    a[aTeller] = en.verdi;
+	    aTeller++;
+	}
+	return a;
     }
+
+    public Iterator iterator() {
+	return new SingelIterator();
+    }
+
+        class SingelIterator implements Iterator<V> {
+		
+		Lelem forste;
+		Lelem neste;
+		boolean ringForrige=false;
+		
+		SingelIterator() {
+			neste=hode;
+			forrige=hode;
+		}
+		
+		
+		public boolean hasNext() {
+			
+			return neste.neste != null;
+		}
+
+		
+		public T next() {
+			
+			Node temp;
+			ringForrige=true;
+			if(forrige ==hode) {
+				temp =neste.neste;
+				neste= neste.neste;
+			}else{
+				temp=hode.neste.neste;
+				forrige=neste;
+				neste=neste.neste;
+			}
+			forrige=neste;
+			neste=neste.neste;
+			
+			return temp.verdi;
+		}
+
+		
+		public void remove() {
+			if(ringForrige) {
+				ringForrige=false;
+				forrige.neste=forrige.neste.neste;
+			}else{
+				throw new IllegalStateException();
+			}
+		}
+		
+	}
+
 }
 
 class Person {
