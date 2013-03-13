@@ -202,6 +202,7 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 	SingelIterator() {
 	    //neste=hode;
 	    //	forrige=hode;
+	    // For (V v: testgreie.values())
 	    System.out.println("Lol");
 	}
 	public V next() {

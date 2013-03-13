@@ -101,10 +101,10 @@ class TestSamling {
         else
             fjernAlle("Tester for leggInn og inneholder maa passere");
         
-        if (liInne)
-            tilArray("");
-        else
-            tilArray("Tester for leggInn og inneholder maa passere");
+	   if (liInne)
+	     tilArray("");
+	      else
+	      tilArray("Tester for leggInn og inneholder maa passere");
         
         if (liAnt)
             noDuplicates("");
