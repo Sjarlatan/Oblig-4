@@ -6,22 +6,23 @@ class Benjamin4 {
 }
 
 class Test {
-    SELLbeholder<String, String> beholder = new SELLbeholder<String, String>();
+    SELLbeholder<String, Person> testbeholder = new SELLbeholder<String, Person>();
+    //INF1010samling <String, Person> minBeholder;
+    Person a = new Person("Benjamin");
+    testbeholder.leggInn(a.navn, a);
     
     //String Benjamin = "Benjamin";
     //String Benjaminverdi = "10010101";
     
     //beholder.leggInn(N "Benjamin", V "Benjaminverdi");
+    //git push origin master
 }
 
 class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
     int antall = 0;
 
-    //Usikker om bruk.
-    Lelem hode = new Lelem(null, null);
-    Lelem hale = new Lelem(null, null);
-
     private Lelem forste;
+    //private Lelem siste;
 
     private class Lelem {
 	Lelem neste;
@@ -37,12 +38,17 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
     public void leggInn(N n, V v) {
 
 	if (forste == null) {
+	    Lelem lel = new Lelem(n, v);
+	    lel.neste = forste;
+	    forste = lel;
+	    antall++;
 	    return;
 	}
 
 	if (inneholder(n)) {
 	    return;
 	}
+	//beholder disse - pilhode
 
 	Lelem lel = new Lelem(n, v);
 	lel.neste = forste;
@@ -55,6 +61,11 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
     }
 
     public V hent(N n)  {
+	for (Lelem en = forste; en!=null; en=en.neste) {
+	    if (en.nokkel.compareTo(n) != 0) {
+		return en.verdi;//Eller nokkel?
+	    } 
+	}
 	return null;
     }
 
@@ -92,3 +103,10 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
     }
 }
 
+class Person {
+    String navn;
+
+    Person(String navn) {
+	this.navn = navn;
+    }
+}
