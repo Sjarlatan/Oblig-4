@@ -43,7 +43,6 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 
 	if (forste == null) {
 	    Lelem lel = new Lelem(n, v);
-	    lel.neste = forste;
 	    forste = lel;
 	    antall++;
 	    return;
@@ -57,28 +56,39 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 	if (antall==1) {
 	    if (lel.nokkel.compareTo(forste.nokkel) > 0) {
 		forste.neste = lel;
-		lel.neste = forste;
 		antall++;
 		return;
 	    } else {
-		lel.neste = forste;
+		Lelem tmp1 = forste;
 		forste = lel;
-		forste.neste = lel;
+		forste.neste = tmp1;
+		antall++;
 		return;
 	    }
-	} else {//Hvis antall er storre enn 1...
-	   for (Lelem en = forste; en!=null; en=en.neste) {
+	} 
 
-	       if (lel.nokkel.compareTo(en.nokkel) > 0 && lel.nokkel.compareTo(en.neste.nokkel < 0) {
+	//Hvis antall er storre enn 1...
+	for (Lelem en = forste; en!=null; en=en.neste) {
 
-		       Lelem tmp1 = en.neste;
-		       en.neste = lel;
-		       lel.neste = tmp1;
+	    if (en.neste != null) {
+		if (lel.nokkel.compareTo(en.nokkel) > 0 && lel.nokkel.compareTo(en.neste.nokkel) < 0) {
 
-		   }
+		    Lelem tmp1 = en.neste;
+		    en.neste = lel;
+		    lel.neste = tmp1;
+		    antall++;
+		    return;
 
-	   }
+		}
+	    } else {
+		if (lel.nokkel.compareTo(en.nokkel) > 0) {
+		    en.neste = lel;
+		    antall++;
+		}
+	    }
+
 	}
+
     }
 
     public int antall() {
@@ -108,7 +118,7 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 
     public boolean inneholder(N n) {
 	for (Lelem en = forste; en!=null; en=en.neste) {
-	    if (en.nokkel.compareTo(n) != 0) {
+	    if (en.nokkel.compareTo(n) == 0) {
 		return true;
 	    } 
 	}
