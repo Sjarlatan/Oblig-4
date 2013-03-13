@@ -1,4 +1,8 @@
 import java.util.Iterator;
+import java.util.Scanner;
+
+//Scanner lesFeil = new Scanner(fil);
+
 class Benjamin4 {
     public static void main(String args[]) {
 	System.out.println("LOLOLOLOLOL");
@@ -12,7 +16,7 @@ class Test {
 	//SELLbeholder<String, Person> testbeholder = new SELLbeholder<String, Person>();
 	//INF1010samling <String, Person> minBeholder;
 	Person a = new Person("Benjamin");
-	testbeholder.leggInn(a.navn, a);
+	testbeholder.leggInn(a.hentNavn(), a);
     
 	//String Benjamin = "Benjamin";
 	//String Benjaminverdi = "10010101";
@@ -202,36 +206,79 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 
 	Lelem neste;
 	Lelem forrige;
-	boolean ringForrige=false;
-	int teller = 0;
 
 	SingelIterator() {
 	    neste=forste;
 	    forrige=forste;
-	    // For (V v: testgreie.values())
 	}
 	public V next() {
-	    System.out.println("Lol1");
-	    return hent(++teller);
+	    forrige = neste;
+	    neste = neste.neste;
+	    return forrige.verdi;
 	}
 
 	public boolean hasNext() {
-	    return (teller < antall());
+	    return (neste.neste != null);
 	}
 
 	public void remove() {
-	    fjernElement(forste.nokkel);
-	    antall--;
-	    antall--;
+	    fjernElement(neste.nokkel);
 	}
     }
 
 }
 
 class Person {
-    String navn;
+    private String navn;
 
     Person(String navn) {
 	this.navn = navn;
+    }
+
+    public String hentNavn() {
+	return navn;
+    }
+}
+
+class Eier extends Person {
+
+        Eier(String navn) {
+	    super(navn);
+        SELLbeholder<String, Kjoretoy> mineBiler = new SELLbeholder<String, Kjoretoy>();
+    }
+    
+}
+
+class Mekaniker extends Person {
+    Mekaniker(String navn) {
+	super(navn);
+SELLbeholder<String, Kjoretoy> mineBiler = new SELLbeholder<String, Kjoretoy>();
+    }
+}
+
+abstract class Kjoretoy {
+    String regNr;
+    double takst;
+    Kjoretoy(String regNr, double takst) {
+	this.regNr = regNr;
+	this.takst = takst;
+    }
+}
+
+class Bil extends Kjoretoy {
+    Bil(String regNr, double takst) {
+	super(regNr, takst);
+    }
+}
+
+class Lastebil extends Kjoretoy {
+    Lastebil(String regNr, double takst) {
+	super(regNr, takst);
+    }
+}
+
+class Buss extends Kjoretoy {
+    Buss(String regNr, double takst) {
+	super(regNr, takst);
     }
 }
