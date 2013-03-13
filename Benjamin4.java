@@ -6,16 +6,20 @@ class Benjamin4 {
 }
 
 class Test {
-    SELLbeholder<String, Person> testbeholder = new SELLbeholder<String, Person>();
-    //INF1010samling <String, Person> minBeholder;
-    Person a = new Person("Benjamin");
-    testbeholder.leggInn(a.navn, a);
+    Test () {
+	SELLbeholder<String, Person> testbeholder = new SELLbeholder<String, Person>();
+	//INF1010samling <String, Person> minBeholder;
+	Person a = new Person("Benjamin");
+	testbeholder.leggInn(a.navn, a);
     
-    //String Benjamin = "Benjamin";
-    //String Benjaminverdi = "10010101";
+	//String Benjamin = "Benjamin";
+	//String Benjaminverdi = "10010101";
     
-    //beholder.leggInn(N "Benjamin", V "Benjaminverdi");
-    //git push origin master
+	//beholder.leggInn(N "Benjamin", V "Benjaminverdi");
+	//git add .
+	//git commit -am "My first test"
+	//git push origin master
+    }
 }
 
 class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
@@ -49,11 +53,32 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 	    return;
 	}
 	//beholder disse - pilhode
-
 	Lelem lel = new Lelem(n, v);
-	lel.neste = forste;
-	forste = lel;
-	antall++;
+	if (antall==1) {
+	    if (lel.nokkel.compareTo(forste.nokkel) > 0) {
+		forste.neste = lel;
+		lel.neste = forste;
+		antall++;
+		return;
+	    } else {
+		lel.neste = forste;
+		forste = lel;
+		forste.neste = lel;
+		return;
+	    }
+	} else {//Hvis antall er storre enn 1...
+	   for (Lelem en = forste; en!=null; en=en.neste) {
+
+	       if (lel.nokkel.compareTo(en.nokkel) > 0 && lel.nokkel.compareTo(en.neste.nokkel < 0) {
+
+		       Lelem tmp1 = en.neste;
+		       en.neste = lel;
+		       lel.neste = tmp1;
+
+		   }
+
+	   }
+	}
     }
 
     public int antall() {
