@@ -7,7 +7,8 @@ class Benjamin4 {
 
 class Test {
     Test () {
-	SELLbeholder<String, Person> testbeholder = new SELLbeholder<String, Person>();
+	INF1010samling<String, Person> testbeholder = new SELLbeholder<String, Person>();
+	//SELLbeholder<String, Person> testbeholder = new SELLbeholder<String, Person>();
 	//INF1010samling <String, Person> minBeholder;
 	Person a = new Person("Benjamin");
 	testbeholder.leggInn(a.navn, a);
@@ -52,8 +53,8 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 	    return;
 	}
 	//beholder disse - pilhode
-	Lelem lel = new Lelem(n, v);
 	if (antall==1) {
+	    	Lelem lel = new Lelem(n, v);
 	    if (lel.nokkel.compareTo(forste.nokkel) > 0) {
 		forste.neste = lel;
 		antall++;
@@ -69,7 +70,7 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 
 	//Hvis antall er storre enn 1...
 	for (Lelem en = forste; en!=null; en=en.neste) {
-
+	    	Lelem lel = new Lelem(n, v);
 	    if (en.neste != null) {
 		if (lel.nokkel.compareTo(en.nokkel) > 0 && lel.nokkel.compareTo(en.neste.nokkel) < 0) {
 
