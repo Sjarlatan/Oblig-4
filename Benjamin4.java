@@ -199,23 +199,30 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
     }
 
     class SingelIterator implements Iterator<V> {
+
+	Lelem neste;
+	Lelem forrige;
+	boolean ringForrige=false;
+	int teller = 0;
+
 	SingelIterator() {
-	    //neste=hode;
-	    //	forrige=hode;
-	    System.out.println("Lol");
+	    neste=forste;
+	    forrige=forste;
+	    // For (V v: testgreie.values())
 	}
 	public V next() {
 	    System.out.println("Lol1");
-	    return null;
+	    return hent(++teller);
 	}
 
 	public boolean hasNext() {
-	    System.out.println("Lol2");
-	    return false;
+	    return (teller < antall());
 	}
 
 	public void remove() {
-	    System.out.println("Lol3");
+	    fjernElement(forste.nokkel);
+	    antall--;
+	    antall--;
 	}
     }
 
