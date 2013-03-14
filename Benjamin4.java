@@ -26,8 +26,19 @@ class Test {
         bilBeholder = new SELLbeholder<String, Kjoretoy>();
 
         fil();
+	//Lesningen av antall reparasjoner hang seg naa en time for "fristen" min gaar ut, og jeg finner ikke ut hvorfor
+	//Nytt forsok mottas med takk.
+
+	//Jeg ser ogsaa naa at jeg har feilprioritert og satt beholderen og iteratoren foran.
+	//Den funker.
+	//C og D derimot: Ikke saerlig.
+	//Oppgavetekstens utforming var langt utenfor min kompetanse til aa forstaa nonlinaere narrativ.
+
+	//Utskrift av eiere og antall biler:
 	//eiere();
-	//kjoretoy();
+
+	//Utskrift av kjoretoy regNr og antall:
+	// kjoretoy();
 
 
 	//INF1010samling <String, Person> minBeholder;
@@ -36,12 +47,12 @@ class Test {
 
     void eiere () {
 	int testeTell = 0;
-	for (Person p: personBeholder) {
+	for (Person u: personBeholder) {
 	    //  System.out.println(p.hentNavn());
 	    testeTell++;
-	    if (p.mineBiler.antall() > 0) {
-		System.out.println(p.hentNavn());
-		System.out.println("Mitt antall kjoretoy: " + p.mineBiler.antall());
+	    if (u.mineBiler.antall() > 0) {
+		System.out.println(u.hentNavn());
+		System.out.println("Mitt antall kjoretoy: " + u.mineBiler.antall());
 	    }
 	    System.out.println(testeTell);
 	}
@@ -49,8 +60,8 @@ class Test {
 
     void kjoretoy () {
 	int testeTell = 0;
-	for (Kjoretoy k: bilBeholder) {
-	    System.out.println(k.regNr);
+	for (Kjoretoy j: bilBeholder) {
+	    System.out.println(j.regNr);
 	    testeTell++;
 	    System.out.println(testeTell);
 	}
@@ -557,30 +568,43 @@ class Person {
 }
 
 
-class Mekaniker extends Person {
+    class Mekaniker extends Person {
 
-    SELLbeholder<String, Kjoretoy> gjennomforteReperasjoner;
-    boolean mekaniker = true;
+	SELLbeholder<String, Kjoretoy> gjennomforteReperasjoner;
+	boolean mekaniker = true;
 
-    Mekaniker(String navn) {
-	super(navn);
-	gjennomforteReperasjoner = new SELLbeholder<String, Kjoretoy>();
+	Mekaniker(String navn) {
+	    super(navn);
+	    gjennomforteReperasjoner = new SELLbeholder<String, Kjoretoy>();
+	}
+
+	public boolean eierJegBil () {
+	    return (mineBiler.antall() >= 1);
+	    //Jeg tror ikke dette er greit utifra oppgaveteksten, 
+	    //men med daarlig tid og litt usikkerhet maa jeg gjore dette i starten. 
+	    //Om jeg ikke rekker mer blir det saann som dette.
+	}
+
+	public boolean ulovligEgenReperasjon () {
+	    if (mekaniker) {
+		return false;
+	    } else {
+		for (Kjoretoy b: mineBiler) {
+
+		    for (Person p: b.kjoretoyetsReperasjoner) {
+
+			if (b.kjoretoyetsReperasjoner.inneholder(hentNavn())) {
+			    return true;
+			}
+
+		    }
+
+		}
+		return false;
+	    }
+	}
+
     }
-
-    // public boolean erJegMekaniker () {
-    // 	return (mekaniker);
-    // }
-
-}
-
-// class Reperasjoner {
-//     String test;
-//     int vanligRep = 0;
-//     int mekanikerRep = 0;
-//     Reperasjoner () {
-// 	System.out.println("Reperasjoner gjennomfort!");
-//     }
-// }
 
 abstract class Kjoretoy {
 
