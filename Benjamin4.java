@@ -13,6 +13,9 @@ class Filleser {
 	    System.out.println("Noe er galt.");
 	    f = null;}
 
+	//if f equals personer read nextline as number, nextline as new person
+	//Repeat lignende for resten.
+
     }
 
     Filleser() {
@@ -223,16 +226,15 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
     class SingelIterator implements Iterator<V> {
 
 	Lelem neste;
-	Lelem forrige;
+	boolean fjernet = false;
 
 	SingelIterator() {
 	    neste=forste;
-	    forrige=forste;
 	}
 	public V next() {
-	    forrige = neste;
+	    fjernet = false;
 	    neste = neste.neste;
-	    return forrige.verdi;
+	    return neste.verdi;
 	}
 
 	public boolean hasNext() {
@@ -240,7 +242,11 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 	}
 
 	public void remove() {
-	    fjernElement(neste.nokkel);
+	    if (fjernet == false) {
+		fjernElement(neste.nokkel);
+	    }
+	    fjernet = true;
+
 	}
     }
 
@@ -256,6 +262,13 @@ class Person {
     public String hentNavn() {
 	return navn;
     }
+
+    public Boolean eierJegBil () {
+	if (1==1){
+	    System.out.println("Jepp.");
+	    return true;
+	} return false;
+    }
 }
 
 class Eier extends Person {
@@ -270,14 +283,23 @@ class Eier extends Person {
 class Mekaniker extends Person {
     Mekaniker(String navn) {
 	super(navn);
-SELLbeholder<String, Kjoretoy> mineBiler = new SELLbeholder<String, Kjoretoy>();
+SELLbeholder<String, Kjoretoy> gjennomforteReperasjoner = new SELLbeholder<String, Kjoretoy>();
+    }
+}
+
+class Reperasjoner {
+    String test;
+    Reperasjoner () {
+	System.out.println("Reperasjoner gjennomfort!");
     }
 }
 
 abstract class Kjoretoy {
     String regNr;
     double takst;
+    double avgift = 0.5;
     Kjoretoy(String regNr, double takst) {
+	SELLbeholder<String, Kjoretoy> kjoretoyetsReperasjoner = new SELLbeholder<String, Kjoretoy>();
 	this.regNr = regNr;
 	this.takst = takst;
     }
@@ -286,17 +308,20 @@ abstract class Kjoretoy {
 class Bil extends Kjoretoy {
     Bil(String regNr, double takst) {
 	super(regNr, takst);
+	//Biler 7,5% hvis bare mekanikere over halvparten av gangene, 10% hvis ikke
     }
 }
 
 class Lastebil extends Kjoretoy {
     Lastebil(String regNr, double takst) {
 	super(regNr, takst);
+	//3,4% av taksten hvis bare mekanikere, hvis ikke, 12%.
     }
 }
 
 class Buss extends Kjoretoy {
     Buss(String regNr, double takst) {
 	super(regNr, takst);
+	//3,4% av taksten hvis bare mekanikere, hvis ikke, 12%.
     }
 }
