@@ -14,9 +14,7 @@ class Filleser {
 	//og fil2 da. Blir det til.
 
 	File fil1 = new File("nyeData");
-	File fil2 = new File("EierOgRepData");
-
-	boolean bil = false;
+	File fil2 = new File("eierOgRepData");
 
 	//	if (f.nextLine().equals("PERSONBILER")) {
 	//	    bil = true;
@@ -27,8 +25,6 @@ class Filleser {
 
 	    f.nextLine();
 	    int listePersoner = f.nextInt();
-
-	    System.out.println("Noe er galt.");
 
 	    String nyPerson = null;
 	    String nyMekaniker = null;
@@ -48,10 +44,11 @@ class Filleser {
 	    int antallLastebiler = 0;
 	    int antallBusser = 0;
 
+	    //Personer
 	    while (antallPersoner <= listePersoner) {
 		if (f.hasNextLine()) {
 		    nyPerson = f.nextLine();
-		    System.out.println(nyPerson);
+		    //System.out.println(nyPerson);
 		    antallPersoner++;
 		}
 	    }
@@ -59,10 +56,11 @@ class Filleser {
 	    f.nextLine();
 	    int listeMekanikere = f.nextInt();
 
+	    //Mekanikere
 	    while (antallMekanikere <= listeMekanikere) {
 		if (f.hasNextLine()) {
 		    nyMekaniker = f.nextLine();
-		    System.out.println(nyMekaniker);
+		    //	    System.out.println(nyMekaniker);
 		    antallMekanikere++;
 		}
 	    }	   
@@ -70,11 +68,12 @@ class Filleser {
 	    f.nextLine();
 	    int listeBiler = f.nextInt();
 
+	    //Biler
 	    while (antallBiler < listeBiler) {
 		if (f.hasNextLine()) {
 		    nyBil = f.next();
 		    nyBilTakst = f.nextInt();
-		    System.out.println(nyBil);
+		    //	    System.out.println(nyBil);
 		    f.nextLine();
 		    antallBiler++;
 		}
@@ -82,13 +81,13 @@ class Filleser {
 
 	    f.nextLine();
 	    int listeLastebiler = f.nextInt();
-	    System.out.println(listeLastebiler);
 
+	    //Lastebiler
 	    while (antallLastebiler < listeLastebiler) {
 		if (f.hasNext()) {
 		    nyLastebil = f.next();
 		    nyLastebilTakst = f.nextInt();
-		    System.out.println(nyLastebil);
+		    //	    System.out.println(nyLastebil);
 		    f.nextLine();
 		    antallLastebiler++;
 		}
@@ -98,26 +97,95 @@ class Filleser {
 	    f.nextLine();
 	    int listeBusser = f.nextInt();
 
+	    //Busser
 	    while (antallBusser < listeBusser) {
 		if (f.hasNextLine()) {
 		    nyBuss = f.next();
 		    nyBussTakst = f.nextInt();
-		    System.out.println(nyBuss);
+		    //System.out.println(nyBuss);
 		    //System.out.println("Denne takst: " + nyBussTakst);
 		    f.nextLine();
 		    antallBusser++;
 		}
-	    }	
+	    }
+
+	    f.close();
+	    //Lukker scanner.
+
+	} catch (FileNotFoundException e) {
+	    System.out.println("Fil 1 ikke funnet.");
+	    e.printStackTrace();
+	}
+	catch (Exception e) {
+	    System.out.println("Linje 1 ikke funnet.");
+	}
+
+
+
+	try {
+	    Scanner b = new Scanner(fil2);
+
+	    String nyEier = null;
+	    String nyBilEid = null;
+	    int antallEierskap = 0;
+
+	    b.nextLine();
+
+	    int eierListe = b.nextInt();
+	    //  int testTeller = 390;
+
+	    //Eierskap
+	    while (antallEierskap < eierListe) {
+		if (b.hasNextLine()) {
+
+		    nyBilEid = b.next();
+		    b.skip("  ");
+		    nyEier = b.nextLine();
+		    //   b.nextLine();
+		    //		    System.out.println("Bil:" + nyBilEid);
+		    //		    System.out.println("Eier:" + nyEier);
+		    antallEierskap++;
+		    // testTeller++;
+		}
+	    }
+
+
+	    String nyBilReparert = null;
+	    String nyReparasjonAv = null;
+	    int antallReparasjoner = 0;
+
+	    b.nextLine();
+
+	    int repListe = b.nextInt();
+	    //	    int testTeller = 4990;
+
+	    //Reparasjoner
+	    while (antallReparasjoner < repListe) {
+		if (b.hasNextLine()) {
+
+		    nyBilReparert = b.next();
+		    b.skip("  ");
+		    nyReparasjonAv= b.nextLine();
+		    //   b.nextLine();
+		    System.out.println("Bil:" + nyBilReparert);
+		    System.out.println("Reppist:" + nyReparasjonAv);
+		    antallReparasjoner++;
+		    //	    testTeller++;
+		}
+	    }
+
+	    b.close();
 
 
 
 	} catch (FileNotFoundException e) {
-	    System.out.println("Fil ikke funnet.");
+	    System.out.println("Fil 2 ikke funnet.");
 	    e.printStackTrace();
 	}
 	catch (Exception e) {
-	    System.out.println("Linje ikke funnet.");
+	    System.out.println("Linje 2 ikke funnet.");
 	}
+
 
     }
     //Kan hende denne returnerer
