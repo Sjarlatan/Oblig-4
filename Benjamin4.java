@@ -226,19 +226,33 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
     class SingelIterator implements Iterator<V> {
 
 	Lelem neste;
+	Lelem forrige;
 	boolean fjernet = false;
+	boolean start = true;
 
 	SingelIterator() {
 	    neste=forste;
 	}
 	public V next() {
+	    if (start) {
+		start = false;
+		forrige = neste;
+        	if (hasNext()) {
+		    neste = forrige.neste;
+        	}
+		return forrige.verdi;
+	    }
+
 	    fjernet = false;
-	    neste = neste.neste;
-	    return neste.verdi;
+	    neste = forrige;
+	    if (hasNext()) {
+		neste = forrige.neste;
+	    }
+	    return forrige.verdi;
 	}
 
 	public boolean hasNext() {
-	    return (neste.neste != null);
+	    return (forrige.neste != null);
 	}
 
 	public void remove() {
