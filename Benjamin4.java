@@ -11,33 +11,111 @@ class Filleser {
 
     void fil () {
 	// Folk og biler leses inn her.
+	//og fil2 da. Blir det til.
 
 	File fil1 = new File("nyeData");
 	File fil2 = new File("EierOgRepData");
 
-    	Scanner f;
+	boolean bil = false;
+
+	//	if (f.nextLine().equals("PERSONBILER")) {
+	//	    bil = true;
+	//	}
+
 	try {
-	    f = new Scanner(fil1);
+	    Scanner f = new Scanner(fil1);
+
+	    f.nextLine();
+	    int listePersoner = f.nextInt();
+
+	    System.out.println("Noe er galt.");
+
+	    String nyPerson = null;
+	    String nyMekaniker = null;
+
+	    String nyBil = null;
+	    int nyBilTakst = 0;
+
+	    String nyLastebil = null;
+	    int nyLastebilTakst = 0;
+
+	    String nyBuss = null;
+	    int nyBussTakst = 0;	    
+
+	    int antallPersoner = 0;
+	    int antallMekanikere = 0;
+	    int antallBiler = 0;
+	    int antallLastebiler = 0;
+	    int antallBusser = 0;
+
+	    while (antallPersoner <= listePersoner) {
+		if (f.hasNextLine()) {
+		    nyPerson = f.nextLine();
+		    System.out.println(nyPerson);
+		    antallPersoner++;
+		}
+	    }
+
+	    f.nextLine();
+	    int listeMekanikere = f.nextInt();
+
+	    while (antallMekanikere <= listeMekanikere) {
+		if (f.hasNextLine()) {
+		    nyMekaniker = f.nextLine();
+		    System.out.println(nyMekaniker);
+		    antallMekanikere++;
+		}
+	    }	   
+
+	    f.nextLine();
+	    int listeBiler = f.nextInt();
+
+	    while (antallBiler < listeBiler) {
+		if (f.hasNextLine()) {
+		    nyBil = f.next();
+		    nyBilTakst = f.nextInt();
+		    System.out.println(nyBil);
+		    f.nextLine();
+		    antallBiler++;
+		}
+	    }	
+
+	    f.nextLine();
+	    int listeLastebiler = f.nextInt();
+	    System.out.println(listeLastebiler);
+
+	    while (antallLastebiler < listeLastebiler) {
+		if (f.hasNext()) {
+		    nyLastebil = f.next();
+		    nyLastebilTakst = f.nextInt();
+		    System.out.println(nyLastebil);
+		    f.nextLine();
+		    antallLastebiler++;
+		}
+	    }	
+
+	    
+	    f.nextLine();
+	    int listeBusser = f.nextInt();
+
+	    while (antallBusser < listeBusser) {
+		if (f.hasNextLine()) {
+		    nyBuss = f.next();
+		    nyBussTakst = f.nextInt();
+		    System.out.println(nyBuss);
+		    //System.out.println("Denne takst: " + nyBussTakst);
+		    f.nextLine();
+		    antallBusser++;
+		}
+	    }	
+
+
+
 	} catch (FileNotFoundException e) {
 	    System.out.println("Fil ikke funnet.");
 	    e.printStackTrace();
 	}
-
-	String nyPerson = null;
-
-	try {
-	    f = new Scanner(fil1);
-	    f.nextLine();
-	    f.nextLine();
-
-
-	    System.out.println("Noe er galt.");
-
-	    while (f.hasNextLine()) {
-		nyPerson = f.nextLine();
-		System.out.println(nyPerson);
-	    }
-	} catch (Exception e) {
+	catch (Exception e) {
 	    System.out.println("Linje ikke funnet.");
 	}
 
