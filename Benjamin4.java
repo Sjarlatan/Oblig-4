@@ -7,12 +7,53 @@ import java.util.Scanner;
 // Benjamin A. Thomas. Benjamat
 //OBS: Lite tid til kommentering og javadoc. Beklager.
 
-class Filleser {
 
-    void fil () {
+//for (Person p: personBeholder) {
+//}
+
+class Benjamin4 {
+    public static void main(String args[]) {
+	System.out.println("*** VELKOMMEN TIL BENJAMINS 4. OBLIG ***");
+	Test test = new Test();
+	System.out.println("*** TAKK FOR BESOKET TIL BENJAMINS 4. OBLIG ***");
+    }
+}
+
+class Test {
+    INF1010samling<String, Person> personBeholder;
+    INF1010samling<String, Mekaniker> mekBeholder;
+    INF1010samling<String, Kjoretoy> bilBeholder;
+
+    Test () {
+        personBeholder = new SELLbeholder<String, Person>();
+	mekBeholder = new SELLbeholder<String, Mekaniker>();
+        bilBeholder = new SELLbeholder<String, Kjoretoy>();
+
+        fil();
+
+	for (Person p: personBeholder) {
+	    System.out.println(p.hentNavn());
+	}
+
+	//SELLbeholder(String, Person) personBeholder, SELLbeholder(String, Kjoretoy) bilBeholder
+
+	//INF1010samling <String, Person> minBeholder;
+	//Person a = new Person("Benjamin");
+	//testbeholder.leggInn(a.hentNavn(), a);
+   
+	//String Benjamin = "Benjamin";
+	//String Benjaminverdi = "10010101";
+    
+	//beholder.leggInn(N "Benjamin", V "Benjaminverdi");
+	//git add .
+	//git commit -am "My first test"
+	//git push origin master
+    }
+
 	// Folk og biler leses inn her.
 	//og fil2 da. Blir det til.
 
+	void fil () {
 	File fil1 = new File("nyeData");
 	File fil2 = new File("eierOgRepData");
 
@@ -48,6 +89,8 @@ class Filleser {
 	    while (antallPersoner <= listePersoner) {
 		if (f.hasNextLine()) {
 		    nyPerson = f.nextLine();
+		    Person p = new Person(nyPerson);
+		    personBeholder.leggInn(nyPerson, p);
 		    //System.out.println(nyPerson);
 		    antallPersoner++;
 		}
@@ -59,9 +102,12 @@ class Filleser {
 	    //Mekanikere
 	    while (antallMekanikere <= listeMekanikere) {
 		if (f.hasNextLine()) {
+
 		    nyMekaniker = f.nextLine();
-		    //	    System.out.println(nyMekaniker);
+		    Mekaniker m = new Mekaniker(nyMekaniker);
+		    mekBeholder.leggInn(nyMekaniker, m);
 		    antallMekanikere++;
+
 		}
 	    }	   
 
@@ -188,6 +234,11 @@ class Filleser {
 
 
     }
+}
+
+class Filleser {
+
+    //void fil (SELLbeholder personBeholder, SELLbeholder bilBeholder) 
     //Kan hende denne returnerer
     //	} catch (Exception e) { 
     //	    System.out.println("Noe er galt.");
@@ -196,39 +247,6 @@ class Filleser {
     //if f equals personer read nextline as number, nextline as new person
     //Repeat lignende for resten.
     //f = new Scanner(new File("EierOgRepData"));
-
-    Filleser() {
-	Scanner sc = new Scanner(System.in);
-    }
-}
-
-class Test {
-    Test () {
-	INF1010samling<String, Person> personBeholder = new SELLbeholder<String, Person>();
-	INF1010samling<String, Kjoretoy> bilBeholder = new SELLbeholder<String, Kjoretoy>();
-
-	Filleser lesFilEn = new Filleser();
-	lesFilEn.fil();
-
-	//INF1010samling <String, Person> minBeholder;
-	Person a = new Person("Benjamin");
-	//testbeholder.leggInn(a.hentNavn(), a);
-   
-	//String Benjamin = "Benjamin";
-	//String Benjaminverdi = "10010101";
-    
-	//beholder.leggInn(N "Benjamin", V "Benjaminverdi");
-	//git add .
-	//git commit -am "My first test"
-	//git push origin master
-    }
-}
-
-class Benjamin4 {
-    public static void main(String args[]) {
-	System.out.println("LOLOLOLOLOL");
-	Test test = new Test();
-    }
 }
 
 class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
@@ -237,7 +255,7 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
     private Lelem forste;
 
     public SELLbeholder() {
-	System.out.println("TEST");//Fikk en kompileringsfeil uten.
+	//	System.out.println("TEST");//Fikk en kompileringsfeil uten.
     }
 
     private class Lelem {
@@ -474,45 +492,71 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 
 }
 
-class Person {
-    private String navn;
-    SELLbeholder<String, Kjoretoy> mineBiler;
+    class Person {
+	private String navn;
+	boolean mekaniker = false;
+	SELLbeholder<String, Kjoretoy> mineBiler;
 
-    Person(String navn) {
-	mineBiler = new SELLbeholder<String, Kjoretoy>();
-	this.navn = navn;
-    }
+	Person(String navn) {
+	    mineBiler = new SELLbeholder<String, Kjoretoy>();
+	    this.navn = navn;
+	}
 
-    public String hentNavn() {
-	return navn;
-    }
+	public String hentNavn() {
+	    return navn;
+	}
 
-    public boolean eierJegBil () {
-	return (mineBiler.antall() >= 1);
-	//Jeg tror ikke dette er greit utifra oppgaveteksten, men med daarlig tid og litt usikkerhet maa jeg gjore dette i starten. Om jeg ikke rekker mer blir det saann som dette.
+	public boolean eierJegBil () {
+	    return (mineBiler.antall() >= 1);
+	    //Jeg tror ikke dette er greit utifra oppgaveteksten, men med daarlig tid og litt usikkerhet maa jeg gjore dette i starten. Om jeg ikke rekker mer blir det saann som dette.
+	}
+
+	public boolean ulovligEgenReperasjon () {
+	    if (mekaniker) {
+		return false;
+	    } else {
+		for (Kjoretoy b: mineBiler) {
+
+		    for (Person p: b.kjoretoyetsReperasjoner) {
+
+			if (b.kjoretoyetsReperasjoner.inneholder(hentNavn())) {
+			    return true;
+			}
+
+		    }
+
+		}
+		return false;
+	    }
+	}
+
     }
-}
 
 
 class Mekaniker extends Person {
 
     SELLbeholder<String, Kjoretoy> gjennomforteReperasjoner;
+    boolean mekaniker = true;
 
     Mekaniker(String navn) {
 	super(navn);
 	gjennomforteReperasjoner = new SELLbeholder<String, Kjoretoy>();
     }
 
+    // public boolean erJegMekaniker () {
+    // 	return (mekaniker);
+    // }
+
 }
 
-class Reperasjoner {
-    String test;
-    int vanligRep = 0;
-    int mekanikerRep = 0;
-    Reperasjoner () {
-	System.out.println("Reperasjoner gjennomfort!");
-    }
-}
+// class Reperasjoner {
+//     String test;
+//     int vanligRep = 0;
+//     int mekanikerRep = 0;
+//     Reperasjoner () {
+// 	System.out.println("Reperasjoner gjennomfort!");
+//     }
+// }
 
 abstract class Kjoretoy {
 
