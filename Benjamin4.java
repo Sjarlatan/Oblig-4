@@ -167,8 +167,8 @@ class Filleser {
 		    b.skip("  ");
 		    nyReparasjonAv= b.nextLine();
 		    //   b.nextLine();
-		    System.out.println("Bil:" + nyBilReparert);
-		    System.out.println("Reppist:" + nyReparasjonAv);
+		    //	    System.out.println("Bil:" + nyBilReparert);
+		    //	    System.out.println("Reppist:" + nyReparasjonAv);
 		    antallReparasjoner++;
 		    //	    testTeller++;
 		}
@@ -476,8 +476,10 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 
 class Person {
     private String navn;
+    SELLbeholder<String, Kjoretoy> mineBiler;
 
     Person(String navn) {
+	mineBiler = new SELLbeholder<String, Kjoretoy>();
 	this.navn = navn;
     }
 
@@ -485,25 +487,12 @@ class Person {
 	return navn;
     }
 
-    public Boolean eierJegBil () {
-	if (1==1){
-	    System.out.println("Jepp.");
-	    return true;
-	} return false;
+    public boolean eierJegBil () {
+	return (mineBiler.antall() >= 1);
+	//Jeg tror ikke dette er greit utifra oppgaveteksten, men med daarlig tid og litt usikkerhet maa jeg gjore dette i starten. Om jeg ikke rekker mer blir det saann som dette.
     }
 }
 
-class Eier extends Person {
-
-    SELLbeholder<String, Kjoretoy> mineBiler;
-
-    Eier(String navn) {
-	super(navn);
-	mineBiler = new SELLbeholder<String, Kjoretoy>();
-	//Hvis eier reparerer eget kjoretoy skal bilen avskiltes og fjernes hvis ikke eier er mekaniker.
-    }
-    
-}
 
 class Mekaniker extends Person {
 
@@ -513,6 +502,7 @@ class Mekaniker extends Person {
 	super(navn);
 	gjennomforteReperasjoner = new SELLbeholder<String, Kjoretoy>();
     }
+
 }
 
 class Reperasjoner {
@@ -547,6 +537,10 @@ class Bil extends Kjoretoy {
 	kjoretoyetsReperasjoner = new SELLbeholder<String, Person>();
 	//Biler 7,5% hvis bare mekanikere over halvparten av gangene, 10% hvis ikke
     }
+
+    double avgift() {
+	return takst*0.05;
+    }
 }
 
 class Lastebil extends Kjoretoy {
@@ -557,6 +551,10 @@ class Lastebil extends Kjoretoy {
 	super(regNr, takst);
 	kjoretoyetsReperasjoner = new SELLbeholder<String, Person>();
 	//3,4% av taksten hvis bare mekanikere eller ikke, hvis ikke, 12%.
+    }
+
+    double avgift() {
+	return takst*0.034;
     }
 }
 
@@ -569,5 +567,9 @@ class Buss extends Kjoretoy {
 	
 	kjoretoyetsReperasjoner = new SELLbeholder<String, Person>();
 	//3,4% av taksten hvis bare mekanikere eller ikke, hvis ikke, 12%.
+    }
+
+    double avgift() {
+	return takst*0.34;
     }
 }
