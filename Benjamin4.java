@@ -5,11 +5,9 @@ import java.util.Scanner;
 
 
 // Benjamin A. Thomas. Benjamat
-//OBS: Lite tid til kommentering og javadoc. Beklager.
+//OBS: Jeg skjonte ikke oppgaven for den uka her.
+//OBS fortsetter: Dermed lite tid til kommentering og javadoc. Beklager.
 
-
-//for (Person p: personBeholder) {
-//}
 
 class Benjamin4 {
     public static void main(String args[]) {
@@ -21,16 +19,22 @@ class Benjamin4 {
 
 class Test {
     INF1010samling<String, Person> personBeholder;
-    //  INF1010samling<String, Mekaniker> mekBeholder;
     INF1010samling<String, Kjoretoy> bilBeholder;
 
     Test () {
         personBeholder = new SELLbeholder<String, Person>();
-	//	mekBeholder = new SELLbeholder<String, Mekaniker>();
         bilBeholder = new SELLbeholder<String, Kjoretoy>();
 
         fil();
+	//eiere();
+	//kjoretoy();
 
+
+	//INF1010samling <String, Person> minBeholder;
+
+    }
+
+    void eiere () {
 	int testeTell = 0;
 	for (Person p: personBeholder) {
 	    //  System.out.println(p.hentNavn());
@@ -41,21 +45,21 @@ class Test {
 	    }
 	    System.out.println(testeTell);
 	}
-
-	//____----____
-
-
-	//INF1010samling <String, Person> minBeholder;
-	//git add .
-	//git commit -am "My first test"
-	//git push origin master
-
     }
 
-	// Folk og biler leses inn her.
-	//og fil2 da. Blir det til.
+    void kjoretoy () {
+	int testeTell = 0;
+	for (Kjoretoy k: bilBeholder) {
+	    System.out.println(k.regNr);
+	    testeTell++;
+	    System.out.println(testeTell);
+	}
+    }
 
-	void fil () {
+    // Folk og biler leses inn her.
+    //og fil2 da. Blir det til.
+
+    void fil () {
 	File fil1 = new File("nyeData");
 	File fil2 = new File("eierOgRepData");
 
@@ -119,7 +123,7 @@ class Test {
 		    nyBilTakst = f.nextInt();
 		    Bil b = new Bil(nyBil, nyBilTakst);
 		    bilBeholder.leggInn(nyBil, b);
-		    //	    System.out.println(nyBil);
+		    //	    	    System.out.println(nyBil);
 		    f.nextLine();
 		    antallBiler++;
 		}
@@ -135,7 +139,7 @@ class Test {
 		    nyLastebilTakst = f.nextInt();
 		    Lastebil b = new Lastebil(nyLastebil, nyLastebilTakst);
 		    bilBeholder.leggInn(nyBil, b);
-		    //	    System.out.println(nyLastebil);
+		    //	    	    System.out.println(nyLastebil);
 		    f.nextLine();
 		    antallLastebiler++;
 		}
@@ -152,7 +156,7 @@ class Test {
 		    nyBussTakst = f.nextInt();
 		    Buss b = new Buss(nyBuss, nyBussTakst);
 		    bilBeholder.leggInn(nyBil, b);
-		    //System.out.println(nyBuss);
+		    //	    System.out.println(nyBuss);
 		    //System.out.println("Denne takst: " + nyBussTakst);
 		    f.nextLine();
 		    antallBusser++;
@@ -199,7 +203,7 @@ class Test {
 
 		    //   b.nextLine();
 		    //		    System.out.println("Bil:" + nyBilEid);
-		    //		    System.out.println("Eier:" + nyEier);
+				    //	    System.out.println("Eier:" + nyEier);
 		    antallEierskap++;
 		    // testTeller++;
 		}
@@ -230,8 +234,9 @@ class Test {
 		    //kjoretoyetsReperasjoner;
 
 		    //   b.nextLine();
-		    //	    System.out.println("Bil:" + nyBilReparert);
-		    //	    System.out.println("Reppist:" + nyReparasjonAv);
+		    	    System.out.println("Bil:" + nyBilReparert);
+		    	    System.out.println("Reppist:" + nyReparasjonAv);
+			    System.out.println("Replist:"+repListe);
 		    antallReparasjoner++;
 		    //	    testTeller++;
 		}
@@ -509,47 +514,47 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 
 }
 
-    class Person {
-	private String navn;
-	boolean mekaniker = false;
-	SELLbeholder<String, Kjoretoy> mineBiler;
+class Person {
+    private String navn;
+    boolean mekaniker = false;
+    SELLbeholder<String, Kjoretoy> mineBiler;
 
-	Person(String navn) {
-	    mineBiler = new SELLbeholder<String, Kjoretoy>();
-	    this.navn = navn;
-	}
+    Person(String navn) {
+	mineBiler = new SELLbeholder<String, Kjoretoy>();
+	this.navn = navn;
+    }
 
-	public String hentNavn() {
-	    return navn;
-	}
+    public String hentNavn() {
+	return navn;
+    }
 
-	public boolean eierJegBil () {
-	    return (mineBiler.antall() >= 1);
-	    //Jeg tror ikke dette er greit utifra oppgaveteksten, 
-	    //men med daarlig tid og litt usikkerhet maa jeg gjore dette i starten. 
-	    //Om jeg ikke rekker mer blir det saann som dette.
-	}
+    public boolean eierJegBil () {
+	return (mineBiler.antall() >= 1);
+	//Jeg tror ikke dette er greit utifra oppgaveteksten, 
+	//men med daarlig tid og litt usikkerhet maa jeg gjore dette i starten. 
+	//Om jeg ikke rekker mer blir det saann som dette.
+    }
 
-	public boolean ulovligEgenReperasjon () {
-	    if (mekaniker) {
-		return false;
-	    } else {
-		for (Kjoretoy b: mineBiler) {
+    public boolean ulovligEgenReperasjon () {
+	if (mekaniker) {
+	    return false;
+	} else {
+	    for (Kjoretoy b: mineBiler) {
 
-		    for (Person p: b.kjoretoyetsReperasjoner) {
+		for (Person p: b.kjoretoyetsReperasjoner) {
 
-			if (b.kjoretoyetsReperasjoner.inneholder(hentNavn())) {
-			    return true;
-			}
-
+		    if (b.kjoretoyetsReperasjoner.inneholder(hentNavn())) {
+			return true;
 		    }
 
 		}
-		return false;
-	    }
-	}
 
+	    }
+	    return false;
+	}
     }
+
+}
 
 
 class Mekaniker extends Person {
@@ -671,8 +676,59 @@ class Lastebil extends Kjoretoy {
 	//3,4% av taksten hvis bare mekanikere eller ikke, hvis ikke, 12%.
     }
 
+    int antallReparasjoner() {
+	return kjoretoyetsReperasjoner.antall();
+    }
+
+    boolean harMekGjortMest () {
+	int mekTeller = 0;
+	int pTeller = 0;
+	for (Person p: kjoretoyetsReperasjoner) {
+	    if (p.mekaniker) {
+		mekTeller++;
+	    }
+	    if (!p.mekaniker) {
+		pTeller++;
+	    }
+	}
+	int totalDelt = mekTeller+pTeller/2;
+
+	if (mekTeller > totalDelt) {
+	    return true;
+	} else {
+	    return false;
+	}
+    }
+
+    boolean harMekGjortAlt () {
+	int mekTeller = 0;
+	int pTeller = 0;
+	for (Person p: kjoretoyetsReperasjoner) {
+	    if (p.mekaniker) {
+		mekTeller++;
+	    }
+	    if (!p.mekaniker) {
+		pTeller++;
+	    }
+	}
+
+	if (pTeller == 0) {
+	    return true;
+	} 
+	return false;
+    }
+
     double avgift() {
-	return takst*0.034;
+	if (kjoretoyetsReperasjoner.antall() == 0) {
+	    return takst*0.034;
+	}  
+	if (harMekGjortAlt()) {
+	    return takst*0.034;
+	}
+	// if (harMekGjortMest()) {
+	//     return takst*0.075;
+	// }
+	return takst*0.12;
     }
 }
 
@@ -687,7 +743,59 @@ class Buss extends Kjoretoy {
 	//3,4% av taksten hvis bare mekanikere eller ikke, hvis ikke, 12%.
     }
 
-    double avgift() {
-	return takst*0.34;
+    int antallReparasjoner() {
+	return kjoretoyetsReperasjoner.antall();
     }
+
+    boolean harMekGjortMest () {
+	int mekTeller = 0;
+	int pTeller = 0;
+	for (Person p: kjoretoyetsReperasjoner) {
+	    if (p.mekaniker) {
+		mekTeller++;
+	    }
+	    if (!p.mekaniker) {
+		pTeller++;
+	    }
+	}
+	int totalDelt = mekTeller+pTeller/2;
+
+	if (mekTeller > totalDelt) {
+	    return true;
+	} else {
+	    return false;
+	}
+    }
+
+    boolean harMekGjortAlt () {
+	int mekTeller = 0;
+	int pTeller = 0;
+	for (Person p: kjoretoyetsReperasjoner) {
+	    if (p.mekaniker) {
+		mekTeller++;
+	    }
+	    if (!p.mekaniker) {
+		pTeller++;
+	    }
+	}
+
+	if (pTeller == 0) {
+	    return true;
+	} 
+	return false;
+    }
+
+    double avgift() {
+	if (kjoretoyetsReperasjoner.antall() == 0) {
+	    return takst*0.034;
+	}  
+	if (harMekGjortAlt()) {
+	    return takst*0.034;
+	}
+	// if (harMekGjortMest()) {
+	//     return takst*0.075;
+	// }
+	return takst*0.12;
+    }
+
 }
