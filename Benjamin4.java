@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.*;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -236,13 +237,17 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 	public V next() {
 	    if (start) {
 		start = false;
-	        neste = forste;
+	        neste = forste.neste;
 		return forste.verdi;
 	    }
 
+	    if (neste == null) {
+		throw new NoSuchElementException();
+	    }
+
 	    fjernet = false;
-	    neste = forrige;
-	    neste = forrige.neste;
+	    forrige = neste;
+	    neste = neste.neste;
 	    return forrige.verdi;
 	}
 
