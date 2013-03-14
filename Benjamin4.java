@@ -241,6 +241,7 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 		return forste.verdi;
 	    }
 
+
 	    if (neste == null) {
 		throw new NoSuchElementException();
 	    }
@@ -252,7 +253,10 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 	}
 
 	public boolean hasNext() {
-	    return (forrige.neste != null);
+	    if (start) {
+	    return (forste != null);
+	    }
+	    return (neste.neste != null);
 	}
 
 	public void remove() {
