@@ -231,16 +231,13 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 	boolean start = true;
 
 	SingelIterator() {
-	    neste=forste;
+	    neste=null;
 	}
 	public V next() {
 	    if (start) {
 		start = false;
-		forrige = neste;
-        	if (hasNext()) {
-		    neste = forrige.neste;
-        	}
-		return forrige.verdi;
+	        neste = forste;
+		return neste.verdi;
 	    }
 
 	    fjernet = false;
@@ -303,6 +300,8 @@ SELLbeholder<String, Kjoretoy> gjennomforteReperasjoner = new SELLbeholder<Strin
 
 class Reperasjoner {
     String test;
+    int vanligRep = 0;
+    int mekanikerRep = 0;
     Reperasjoner () {
 	System.out.println("Reperasjoner gjennomfort!");
     }
