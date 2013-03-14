@@ -525,7 +525,9 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 
 	public boolean eierJegBil () {
 	    return (mineBiler.antall() >= 1);
-	    //Jeg tror ikke dette er greit utifra oppgaveteksten, men med daarlig tid og litt usikkerhet maa jeg gjore dette i starten. Om jeg ikke rekker mer blir det saann som dette.
+	    //Jeg tror ikke dette er greit utifra oppgaveteksten, 
+	    //men med daarlig tid og litt usikkerhet maa jeg gjore dette i starten. 
+	    //Om jeg ikke rekker mer blir det saann som dette.
 	}
 
 	public boolean ulovligEgenReperasjon () {
@@ -587,6 +589,10 @@ abstract class Kjoretoy {
 	this.takst = takst;
         kjoretoyetsReperasjoner = new SELLbeholder<String, Person>();
     }
+
+    double avgift() {
+	return takst*0.05;
+    }
 }
 
 class Bil extends Kjoretoy {
@@ -599,8 +605,59 @@ class Bil extends Kjoretoy {
 	//Biler 7,5% hvis bare mekanikere over halvparten av gangene, 10% hvis ikke
     }
 
+    int antallReparasjoner() {
+	return kjoretoyetsReperasjoner.antall();
+    }
+
+    boolean harMekGjortMest () {
+	int mekTeller = 0;
+	int pTeller = 0;
+	for (Person p: kjoretoyetsReperasjoner) {
+	    if (p.mekaniker) {
+		mekTeller++;
+	    }
+	    if (!p.mekaniker) {
+		pTeller++;
+	    }
+	}
+	int totalDelt = mekTeller+pTeller/2;
+
+	if (mekTeller > totalDelt) {
+	    return true;
+	} else {
+	    return false;
+	}
+    }
+
+    boolean harMekGjortAlt () {
+	int mekTeller = 0;
+	int pTeller = 0;
+	for (Person p: kjoretoyetsReperasjoner) {
+	    if (p.mekaniker) {
+		mekTeller++;
+	    }
+	    if (!p.mekaniker) {
+		pTeller++;
+	    }
+	}
+
+	if (pTeller == 0) {
+	    return true;
+	} 
+	return false;
+    }
+
     double avgift() {
-	return takst*0.05;
+	if (kjoretoyetsReperasjoner.antall() == 0) {
+	    return takst*0.05;
+	}  
+	if (harMekGjortAlt()) {
+	    return takst*0.05;
+	}
+	if (harMekGjortMest()) {
+	    return takst*0.075;
+	}
+	return takst*0.10;
     }
 }
 
