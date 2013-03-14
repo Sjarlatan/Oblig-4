@@ -9,24 +9,36 @@ import java.util.Scanner;
 
 class Filleser {
 
-    void filNr1 () {
+    void fil () {
 	// Folk og biler leses inn her.
+
+	File fil1 = new File("nyeData");
+	File fil2 = new File("EierOgRepData");
+
     	Scanner f;
 	try {
-	    f = new Scanner(new File("nyeData"));
-	} catch (Exception e) {
+	    f = new Scanner(fil1);
+	} catch (FileNotFoundException e) {
 	    System.out.println("Fil ikke funnet.");
+	    e.printStackTrace();
 	}
+
 	String nyPerson = null;
-	try{
-	    f.readLine();
-	    f.readLine();
+
+	try {
+	    f = new Scanner(fil1);
+	    f.nextLine();
+	    f.nextLine();
+
+
+	    System.out.println("Noe er galt.");
+
 	    while (f.hasNextLine()) {
-		nyPerson = f.readLine();
+		nyPerson = f.nextLine();
 		System.out.println(nyPerson);
 	    }
 	} catch (Exception e) {
-	    System.out.println("Noe er galt.");
+	    System.out.println("Linje ikke funnet.");
 	}
 
     }
@@ -50,7 +62,7 @@ class Test {
 	INF1010samling<String, Kjoretoy> bilBeholder = new SELLbeholder<String, Kjoretoy>();
 
 	Filleser lesFilEn = new Filleser();
-	lesFilEn.filNr1();
+	lesFilEn.fil();
 
 	//INF1010samling <String, Person> minBeholder;
 	Person a = new Person("Benjamin");
