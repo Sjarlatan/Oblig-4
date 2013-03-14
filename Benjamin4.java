@@ -3,6 +3,8 @@ import java.util.*;
 import java.util.Iterator;
 import java.util.Scanner;
 
+//OBS: Lite tid til kommentering og javadoc. Beklager.
+
 class Filleser {
 
     void filNr1 () {
@@ -101,25 +103,32 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 
 	Lelem lel = new Lelem(n, v);//Mangler sjekk for forste her. Skrives om tid rekkes.
 	//if mindre enn forste, if storre enn forste.neste er en mulighet?
-	    for (Lelem en = forste; en!=null; en=en.neste) {
-		if (en.neste != null) {
-		    if (lel.nokkel.compareTo(en.nokkel) > 0 && lel.nokkel.compareTo(en.neste.nokkel) < 0) {
-
-			Lelem tmp1 = en.neste;
-			en.neste = lel;
+	for (Lelem en = forste; en!=null; en=en.neste) {
+	    if (en.neste != null) {
+		if (lel.nokkel.compareTo(en.nokkel) > 0 && lel.nokkel.compareTo(en.neste.nokkel) < 0) {
+		    //Legger inn denne for aa kontrollere forste bortsett fra ved forstelesing som skjer over naar antall er 1.
+		    if(lel.nokkel.compareTo(forste.nokkel) == 0 && lel.nokkel.compareTo(forste.nokkel) < 0) {
+			Lelem tmp1 = forste;
+		        forste = lel;
 			lel.neste = tmp1;
 			antall++;
 			return;
+		    }
+		    Lelem tmp1 = en.neste;
+		    en.neste = lel;
+		    lel.neste = tmp1;
+		    antall++;
+		    return;
 
-		    }
-		} else {
-		    if (lel.nokkel.compareTo(en.nokkel) > 0) {
-			en.neste = lel;
-			antall++;
-		    }
 		}
-
+	    } else {
+		if (lel.nokkel.compareTo(en.nokkel) > 0) {
+		    en.neste = lel;
+		    antall++;
+		}
 	    }
+
+	}
 
     }
 
@@ -224,6 +233,7 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 	return new SingelIterator();
     }
 
+    //Iterator ferdig og fungerende.
     class SingelIterator implements Iterator<V> {
 
 	Lelem neste;
@@ -253,7 +263,7 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 
 	public boolean hasNext() {
 	    if (start) {
-	    return (forste != null);
+		return (forste != null);
 	    }
 	    return (neste != null);
 	}
@@ -299,17 +309,23 @@ class Person {
 
 class Eier extends Person {
 
-        Eier(String navn) {
-	    super(navn);
-        SELLbeholder<String, Kjoretoy> mineBiler = new SELLbeholder<String, Kjoretoy>();
+    SELLbeholder<String, Kjoretoy> mineBiler;
+
+    Eier(String navn) {
+	super(navn);
+	mineBiler = new SELLbeholder<String, Kjoretoy>();
+	//Hvis eier reparerer eget kjoretoy skal bilen avskiltes og fjernes hvis ikke eier er mekaniker.
     }
     
 }
 
 class Mekaniker extends Person {
+
+    SELLbeholder<String, Kjoretoy> gjennomforteReperasjoner;
+
     Mekaniker(String navn) {
 	super(navn);
-SELLbeholder<String, Kjoretoy> gjennomforteReperasjoner = new SELLbeholder<String, Kjoretoy>();
+	gjennomforteReperasjoner = new SELLbeholder<String, Kjoretoy>();
     }
 }
 
@@ -323,33 +339,49 @@ class Reperasjoner {
 }
 
 abstract class Kjoretoy {
+
     String regNr;
     double takst;
     double avgift = 0.5;
+    SELLbeholder<String, Person> kjoretoyetsReperasjoner;
+
     Kjoretoy(String regNr, double takst) {
-	SELLbeholder<String, Kjoretoy> kjoretoyetsReperasjoner = new SELLbeholder<String, Kjoretoy>();
 	this.regNr = regNr;
 	this.takst = takst;
+        kjoretoyetsReperasjoner = new SELLbeholder<String, Person>();
     }
 }
 
 class Bil extends Kjoretoy {
+
+    SELLbeholder<String, Person> kjoretoyetsReperasjoner;
+
     Bil(String regNr, double takst) {
 	super(regNr, takst);
+	kjoretoyetsReperasjoner = new SELLbeholder<String, Person>();
 	//Biler 7,5% hvis bare mekanikere over halvparten av gangene, 10% hvis ikke
     }
 }
 
 class Lastebil extends Kjoretoy {
+
+    SELLbeholder<String, Person> kjoretoyetsReperasjoner;
+
     Lastebil(String regNr, double takst) {
 	super(regNr, takst);
-	//3,4% av taksten hvis bare mekanikere, hvis ikke, 12%.
+	kjoretoyetsReperasjoner = new SELLbeholder<String, Person>();
+	//3,4% av taksten hvis bare mekanikere eller ikke, hvis ikke, 12%.
     }
 }
 
 class Buss extends Kjoretoy {
-    Buss(String regNr, double takst) {
+
+    SELLbeholder<String, Person> kjoretoyetsReperasjoner;
+
+    Buss(String regNr, double takst) {	
 	super(regNr, takst);
-	//3,4% av taksten hvis bare mekanikere, hvis ikke, 12%.
+	
+	kjoretoyetsReperasjoner = new SELLbeholder<String, Person>();
+	//3,4% av taksten hvis bare mekanikere eller ikke, hvis ikke, 12%.
     }
 }
