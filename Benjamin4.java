@@ -21,33 +21,35 @@ class Benjamin4 {
 
 class Test {
     INF1010samling<String, Person> personBeholder;
-    INF1010samling<String, Mekaniker> mekBeholder;
+    //  INF1010samling<String, Mekaniker> mekBeholder;
     INF1010samling<String, Kjoretoy> bilBeholder;
 
     Test () {
         personBeholder = new SELLbeholder<String, Person>();
-	mekBeholder = new SELLbeholder<String, Mekaniker>();
+	//	mekBeholder = new SELLbeholder<String, Mekaniker>();
         bilBeholder = new SELLbeholder<String, Kjoretoy>();
 
         fil();
 
+	int testeTell = 0;
 	for (Person p: personBeholder) {
-	    System.out.println(p.hentNavn());
+	    //  System.out.println(p.hentNavn());
+	    testeTell++;
+	    if (p.mineBiler.antall() > 0) {
+		System.out.println(p.hentNavn());
+		System.out.println("Mitt antall kjoretoy: " + p.mineBiler.antall());
+	    }
+	    System.out.println(testeTell);
 	}
 
-	//SELLbeholder(String, Person) personBeholder, SELLbeholder(String, Kjoretoy) bilBeholder
+	//____----____
+
 
 	//INF1010samling <String, Person> minBeholder;
-	//Person a = new Person("Benjamin");
-	//testbeholder.leggInn(a.hentNavn(), a);
-   
-	//String Benjamin = "Benjamin";
-	//String Benjaminverdi = "10010101";
-    
-	//beholder.leggInn(N "Benjamin", V "Benjaminverdi");
 	//git add .
 	//git commit -am "My first test"
 	//git push origin master
+
     }
 
 	// Folk og biler leses inn her.
@@ -56,10 +58,6 @@ class Test {
 	void fil () {
 	File fil1 = new File("nyeData");
 	File fil2 = new File("eierOgRepData");
-
-	//	if (f.nextLine().equals("PERSONBILER")) {
-	//	    bil = true;
-	//	}
 
 	try {
 	    Scanner f = new Scanner(fil1);
@@ -105,7 +103,7 @@ class Test {
 
 		    nyMekaniker = f.nextLine();
 		    Mekaniker m = new Mekaniker(nyMekaniker);
-		    mekBeholder.leggInn(nyMekaniker, m);
+		    personBeholder.leggInn(nyMekaniker, m);
 		    antallMekanikere++;
 
 		}
@@ -119,6 +117,8 @@ class Test {
 		if (f.hasNextLine()) {
 		    nyBil = f.next();
 		    nyBilTakst = f.nextInt();
+		    Bil b = new Bil(nyBil, nyBilTakst);
+		    bilBeholder.leggInn(nyBil, b);
 		    //	    System.out.println(nyBil);
 		    f.nextLine();
 		    antallBiler++;
@@ -133,6 +133,8 @@ class Test {
 		if (f.hasNext()) {
 		    nyLastebil = f.next();
 		    nyLastebilTakst = f.nextInt();
+		    Lastebil b = new Lastebil(nyLastebil, nyLastebilTakst);
+		    bilBeholder.leggInn(nyBil, b);
 		    //	    System.out.println(nyLastebil);
 		    f.nextLine();
 		    antallLastebiler++;
@@ -148,6 +150,8 @@ class Test {
 		if (f.hasNextLine()) {
 		    nyBuss = f.next();
 		    nyBussTakst = f.nextInt();
+		    Buss b = new Buss(nyBuss, nyBussTakst);
+		    bilBeholder.leggInn(nyBil, b);
 		    //System.out.println(nyBuss);
 		    //System.out.println("Denne takst: " + nyBussTakst);
 		    f.nextLine();
@@ -187,6 +191,12 @@ class Test {
 		    nyBilEid = b.next();
 		    b.skip("  ");
 		    nyEier = b.nextLine();
+
+		    Person p = personBeholder.hent(nyEier);
+		    Kjoretoy k = bilBeholder.hent(nyBilEid);
+
+		    p.mineBiler.leggInn(nyBilEid, k);
+
 		    //   b.nextLine();
 		    //		    System.out.println("Bil:" + nyBilEid);
 		    //		    System.out.println("Eier:" + nyEier);
@@ -212,6 +222,13 @@ class Test {
 		    nyBilReparert = b.next();
 		    b.skip("  ");
 		    nyReparasjonAv= b.nextLine();
+
+		    Person p = personBeholder.hent(nyReparasjonAv);
+		    Kjoretoy k = bilBeholder.hent(nyBilReparert);
+
+		    k.kjoretoyetsReperasjoner.leggInn(nyReparasjonAv, p);
+		    //kjoretoyetsReperasjoner;
+
 		    //   b.nextLine();
 		    //	    System.out.println("Bil:" + nyBilReparert);
 		    //	    System.out.println("Reppist:" + nyReparasjonAv);
