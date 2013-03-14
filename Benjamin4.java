@@ -238,9 +238,9 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 	    if (start) {
 		start = false;
 	        neste = forste.neste;
+		forrige = forste;
 		return forste.verdi;
 	    }
-
 
 	    if (neste == null) {
 		throw new NoSuchElementException();
@@ -256,12 +256,21 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 	    if (start) {
 	    return (forste != null);
 	    }
-	    return (neste.neste != null);
+	    return (neste != null);
 	}
 
 	public void remove() {
+	    if (start) {
+		throw new IllegalStateException();
+	    }
+	    
 	    if (fjernet == false) {
-		fjernElement(neste.nokkel);
+		if (forrige==null) {
+		    fjernElement(neste.nokkel);
+		    fjernet = true;
+		    return;
+		}
+		fjernElement(forrige.nokkel);
 	    }
 	    fjernet = true;
 
