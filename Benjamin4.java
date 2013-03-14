@@ -3,44 +3,59 @@ import java.util.*;
 import java.util.Iterator;
 import java.util.Scanner;
 
+
+// Benjamin A. Thomas. Benjamat
 //OBS: Lite tid til kommentering og javadoc. Beklager.
 
 class Filleser {
 
     void filNr1 () {
-
+	// Folk og biler leses inn her.
     	Scanner f;
+	try {
+	    f = new Scanner(new File("nyeData"));
+	} catch (Exception e) {
+	    System.out.println("Fil ikke funnet.");
+	}
+	String nyPerson = null;
 	try{
-	    f = new Scanner(new File("EierOgRepData"));
-	} catch (Exception e) { 
+	    f.readLine();
+	    f.readLine();
+	    while (f.hasNextLine()) {
+		nyPerson = f.readLine();
+		System.out.println(nyPerson);
+	    }
+	} catch (Exception e) {
 	    System.out.println("Noe er galt.");
-	    f = null;}
-
-	//if f equals personer read nextline as number, nextline as new person
-	//Repeat lignende for resten.
+	}
 
     }
+    //Kan hende denne returnerer
+    //	} catch (Exception e) { 
+    //	    System.out.println("Noe er galt.");
+    //	    f = null;}
+
+    //if f equals personer read nextline as number, nextline as new person
+    //Repeat lignende for resten.
+    //f = new Scanner(new File("EierOgRepData"));
 
     Filleser() {
 	Scanner sc = new Scanner(System.in);
     }
 }
 
-class Benjamin4 {
-    public static void main(String args[]) {
-	System.out.println("LOLOLOLOLOL");
-	Test test = new Test();
-    }
-}
-
 class Test {
     Test () {
-	INF1010samling<String, Person> testbeholder = new SELLbeholder<String, Person>();
-	//SELLbeholder<String, Person> testbeholder = new SELLbeholder<String, Person>();
+	INF1010samling<String, Person> personBeholder = new SELLbeholder<String, Person>();
+	INF1010samling<String, Kjoretoy> bilBeholder = new SELLbeholder<String, Kjoretoy>();
+
+	Filleser lesFilEn = new Filleser();
+	lesFilEn.filNr1();
+
 	//INF1010samling <String, Person> minBeholder;
 	Person a = new Person("Benjamin");
-	testbeholder.leggInn(a.hentNavn(), a);
-    
+	//testbeholder.leggInn(a.hentNavn(), a);
+   
 	//String Benjamin = "Benjamin";
 	//String Benjaminverdi = "10010101";
     
@@ -48,6 +63,13 @@ class Test {
 	//git add .
 	//git commit -am "My first test"
 	//git push origin master
+    }
+}
+
+class Benjamin4 {
+    public static void main(String args[]) {
+	System.out.println("LOLOLOLOLOL");
+	Test test = new Test();
     }
 }
 
@@ -104,16 +126,19 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 	Lelem lel = new Lelem(n, v);//Mangler sjekk for forste her. Skrives om tid rekkes.
 	//if mindre enn forste, if storre enn forste.neste er en mulighet?
 	for (Lelem en = forste; en!=null; en=en.neste) {
+
+	    //Legger inn denne for aa kontrollere forste bortsett fra ved forstelesing som skjer over naar antall er 1.
+	    if(lel.nokkel.compareTo(forste.nokkel) == 0 && lel.nokkel.compareTo(forste.nokkel) < 0) {
+		Lelem tmp1 = forste;
+		forste = lel;
+		lel.neste = tmp1;
+		antall++;
+		return;
+	    }
+
 	    if (en.neste != null) {
+
 		if (lel.nokkel.compareTo(en.nokkel) > 0 && lel.nokkel.compareTo(en.neste.nokkel) < 0) {
-		    //Legger inn denne for aa kontrollere forste bortsett fra ved forstelesing som skjer over naar antall er 1.
-		    if(lel.nokkel.compareTo(forste.nokkel) == 0 && lel.nokkel.compareTo(forste.nokkel) < 0) {
-			Lelem tmp1 = forste;
-		        forste = lel;
-			lel.neste = tmp1;
-			antall++;
-			return;
-		    }
 		    Lelem tmp1 = en.neste;
 		    en.neste = lel;
 		    lel.neste = tmp1;
@@ -121,11 +146,14 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 		    return;
 
 		}
+
 	    } else {
+
 		if (lel.nokkel.compareTo(en.nokkel) > 0) {
 		    en.neste = lel;
 		    antall++;
 		}
+
 	    }
 
 	}
