@@ -237,8 +237,7 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 	public V next() {
 	    if (start) {
 		start = false;
-	        neste = neste.neste;
-		forrige = forste;
+	        neste = forste.neste;
 		return forste.verdi;
 	    }
 
@@ -266,7 +265,7 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 	    
 	    if (fjernet == false) {
 		if (forrige==null) {
-		    forste = forste.neste;
+		    fjernElement(forste.nokkel);
 		    fjernet = true;
 		    return;
 		}
