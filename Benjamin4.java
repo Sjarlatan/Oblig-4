@@ -1,7 +1,24 @@
+import java.io.*;
 import java.util.Iterator;
 import java.util.Scanner;
 
-//Scanner lesFeil = new Scanner(fil);
+class Filleser {
+
+    void filNr1 () {
+
+    	Scanner f;
+	try{
+	    f = new Scanner(new File("EierOgRepData"));
+	} catch (Exception e) { 
+	    System.out.println("Noe er galt.");
+	    f = null;}
+
+    }
+
+    Filleser() {
+	Scanner sc = new Scanner(System.in);
+    }
+}
 
 class Benjamin4 {
     public static void main(String args[]) {
@@ -34,7 +51,7 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
     private Lelem forste;
 
     public SELLbeholder() {
-	System.out.println("TEST");
+	System.out.println("TEST");//Fikk en kompileringsfeil uten.
     }
 
     private class Lelem {
@@ -78,7 +95,8 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 
 	//Hvis antall er storre enn 1...
 
-	Lelem lel = new Lelem(n, v);
+	Lelem lel = new Lelem(n, v);//Mangler sjekk for forste her. Skrives om tid rekkes.
+	//if mindre enn forste, if storre enn forste.neste er en mulighet?
 	    for (Lelem en = forste; en!=null; en=en.neste) {
 		if (en.neste != null) {
 		    if (lel.nokkel.compareTo(en.nokkel) > 0 && lel.nokkel.compareTo(en.neste.nokkel) < 0) {
