@@ -48,12 +48,12 @@ class Test {
         //mekanikerliste();
 
         //Utskrift og gjennomføring av avskiltning;
-        //ulovligRepOversikt();
+        ulovligRepOversikt();
         //Obs: Gir nullpointer jeg ikke har fikset ennaa. Tid er trang.
         //Fikk odeleggende feil sent paa torsdag, som hindret videre testing. Jobber fredag, og maa fikse ting paa jobb.
         //Helt ferdig blir jeg ikke.
 
-        
+
 
 	}
 
