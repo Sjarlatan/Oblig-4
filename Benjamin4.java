@@ -48,14 +48,22 @@ class Test {
         //mekanikerliste();
 
         //Utskrift og gjennomføring av avskiltning;
-        ulovligRepOversikt();
+        //ulovligRepOversikt();
         //Obs: Gir nullpointer jeg ikke har fikset ennaa. Tid er trang.
         //Fikk odeleggende feil sent paa torsdag, som hindret videre testing. Jobber fredag, og maa fikse ting paa jobb.
         //Helt ferdig blir jeg ikke.
 
-
+        //Utskrift av avgifter:
+        avgiftsGjennomforer();
 
 	}
+
+void avgiftsGjennomforer() {
+	for (Kjoretoy b: bilBeholder) {
+		System.out.println("Bil " + b.regNr + " sin takst er " + b.takst + " kroner.");
+		System.out.println("Avgiften blir : " + b.avgift());
+	}
+}
 
 void ulovligRepOversikt() {
 	for (Person p: personBeholder) {
