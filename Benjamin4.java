@@ -10,263 +10,316 @@ import java.util.Scanner;
 
 
 class Benjamin4 {
-    public static void main(String args[]) {
-	System.out.println("*** VELKOMMEN TIL BENJAMINS 4. OBLIG ***");
-	Test test = new Test();
-	System.out.println("*** TAKK FOR BESOKET TIL BENJAMINS 4. OBLIG ***");
-    }
+	public static void main(String args[]) {
+		System.out.println("*** VELKOMMEN TIL BENJAMINS 4. OBLIG ***");
+		Test test = new Test();
+		System.out.println("*** TAKK FOR BESOKET TIL BENJAMINS 4. OBLIG ***");
+	}
 }
 
 class Test {
-    INF1010samling<String, Person> personBeholder;
-    INF1010samling<String, Kjoretoy> bilBeholder;
+	INF1010samling<String, Person> personBeholder;
+	INF1010samling<String, Kjoretoy> bilBeholder;
 
-    Test () {
-        personBeholder = new SELLbeholder<String, Person>();
-        bilBeholder = new SELLbeholder<String, Kjoretoy>();
+	Test () {
+		personBeholder = new SELLbeholder<String, Person>();
+		bilBeholder = new SELLbeholder<String, Kjoretoy>();
 
-        fil();
+		fil();
 	//Lesningen av antall reparasjoner hang seg naa en time for "fristen" min gaar ut, og jeg finner ikke ut hvorfor
 	//Nytt forsok mottas med takk.
 
-	//Jeg ser ogsaa naa at jeg har feilprioritert og satt beholderen og iteratoren foran.
-	//Den funker.
-	//C og D derimot: Ikke saerlig.
+        //Oppdatering koding paa jobb fikset feilen!
+        //Men tiden er fortsatt kort. Jeg prioriterte det jeg ikke trodde jeg kom til aa klare,
+        //Buss kunne i ettertid hvert extends lastebil, men det tror jeg ikke at jeg rekker.
+
 	//Oppgavetekstens utforming var langt utenfor min kompetanse til aa forstaa nonlinaere narrativ.
 
 	//Utskrift av eiere og antall biler:
 	//eiere();
 
 	//Utskrift av kjoretoy regNr og antall:
-	// kjoretoy();
+	//kjoretoy();
 
+        //Utskrift av personer som ikke eier bil og antall:
+        //ikkeEiere();
 
-	//INF1010samling <String, Person> minBeholder;
+        //Utskrift av mekanikere og antall:
+        //mekanikerliste();
 
-    }
+        //Utskrift og gjennomføring av avskiltning;
+        //ulovligRepOversikt();
+        //Obs: Gir nullpointer jeg ikke har fikset ennaa. Tid er trang.
+        //Fikk odeleggende feil sent paa torsdag, som hindret videre testing. Jobber fredag, og maa fikse ting paa jobb.
+        //Helt ferdig blir jeg ikke.
 
-    void eiere () {
-	int testeTell = 0;
-	for (Person u: personBeholder) {
+        
+
+	}
+
+void ulovligRepOversikt() {
+	for (Person p: personBeholder) {
+		if(p.ulovligEgenReperasjon()) {
+			System.out.println(p.hentNavn() + " har reparert sin egen bil!?!");
+			if(p.mekaniker) {
+				System.out.println("Men det er greit siden han er mekaniker.");
+			} else {
+				System.out.println("Og siden han ikke er mekaniker er ikke det greit?!");
+			}
+		}
+	}
+}
+
+	void mekanikerliste () {
+		int testeTell = 0;
+		for (Person m: personBeholder) {
+			if (m.mekaniker) {
+				testeTell++;
+				System.out.println("Mekaniker: " + m.hentNavn());
+			}
+		}
+		System.out.println("Antall mekanikere: " + testeTell);
+	}
+
+	void ikkeEiere () {
+		int testeTell = 0;
+		for (Person p: personBeholder) {
+			if (!p.eierJegBil()) {
+				testeTell++;
+				System.out.println("Eier ikke bil: " + p.hentNavn());
+			}
+		}
+		System.out.println("Antall ikke-eiere: " + testeTell);
+	}
+
+	void eiere () {
+		int testeTell = 0;
+		for (Person u: personBeholder) {
 	    //  System.out.println(p.hentNavn());
-	    testeTell++;
-	    if (u.mineBiler.antall() > 0) {
-		System.out.println(u.hentNavn());
-		System.out.println("Mitt antall kjoretoy: " + u.mineBiler.antall());
-	    }
-	    System.out.println(testeTell);
+			if (u.mineBiler!=null) {
+				System.out.println(u.hentNavn());
+				System.out.println("Mitt antall kjoretoy: " + u.mineBiler.antall());
+				testeTell++;
+			}
+			System.out.println(testeTell);
+		}
 	}
-    }
 
-    void kjoretoy () {
-	int testeTell = 0;
-	for (Kjoretoy j: bilBeholder) {
-	    System.out.println(j.regNr);
-	    testeTell++;
-	    System.out.println(testeTell);
+	void kjoretoy () {
+		int testeTell = 0;
+		for (Kjoretoy j: bilBeholder) {
+			System.out.println(j.regNr);
+			testeTell++;
+			System.out.println(testeTell);
+		}
 	}
-    }
 
     // Folk og biler leses inn her.
     //og fil2 da. Blir det til.
 
-    void fil () {
-	File fil1 = new File("nyeData");
-	File fil2 = new File("eierOgRepData");
+	void fil () {
+		File fil1 = new File("nyeData");
+		File fil2 = new File("eierOgRepData");
 
-	try {
-	    Scanner f = new Scanner(fil1);
+		try {
+			Scanner f = new Scanner(fil1);
 
-	    f.nextLine();
-	    int listePersoner = f.nextInt();
+			f.nextLine();
+			int listePersoner = f.nextInt();
 
-	    String nyPerson = null;
-	    String nyMekaniker = null;
+			String nyPerson = null;
+			String nyMekaniker = null;
 
-	    String nyBil = null;
-	    int nyBilTakst = 0;
+			String nyBil = null;
+			int nyBilTakst = 0;
 
-	    String nyLastebil = null;
-	    int nyLastebilTakst = 0;
+			String nyLastebil = null;
+			int nyLastebilTakst = 0;
 
-	    String nyBuss = null;
-	    int nyBussTakst = 0;	    
+			String nyBuss = null;
+			int nyBussTakst = 0;	    
 
-	    int antallPersoner = 0;
-	    int antallMekanikere = 0;
-	    int antallBiler = 0;
-	    int antallLastebiler = 0;
-	    int antallBusser = 0;
+			int antallPersoner = 0;
+			int antallMekanikere = 0;
+			int antallBiler = 0;
+			int antallLastebiler = 0;
+			int antallBusser = 0;
 
 	    //Personer
-	    while (antallPersoner <= listePersoner) {
-		if (f.hasNextLine()) {
-		    nyPerson = f.nextLine();
-		    Person p = new Person(nyPerson);
-		    personBeholder.leggInn(nyPerson, p);
+			while (antallPersoner <= listePersoner) {
+				if (f.hasNextLine()) {
+					nyPerson = f.nextLine();
+					Person p = new Person(nyPerson);
+					personBeholder.leggInn(nyPerson, p);
 		    //System.out.println(nyPerson);
-		    antallPersoner++;
-		}
-	    }
+					antallPersoner++;
+				}
+			}
 
-	    f.nextLine();
-	    int listeMekanikere = f.nextInt();
+			f.nextLine();
+			int listeMekanikere = f.nextInt();
 
 	    //Mekanikere
-	    while (antallMekanikere <= listeMekanikere) {
-		if (f.hasNextLine()) {
+			while (antallMekanikere <= listeMekanikere) {
+				if (f.hasNextLine()) {
 
-		    nyMekaniker = f.nextLine();
-		    Mekaniker m = new Mekaniker(nyMekaniker);
-		    personBeholder.leggInn(nyMekaniker, m);
-		    antallMekanikere++;
+					nyMekaniker = f.nextLine();
+					Mekaniker m = new Mekaniker(nyMekaniker);
+					personBeholder.leggInn(nyMekaniker, m);
+					antallMekanikere++;
 
-		}
-	    }	   
+				}
+			}	   
 
-	    f.nextLine();
-	    int listeBiler = f.nextInt();
+			f.nextLine();
+			int listeBiler = f.nextInt();
 
 	    //Biler
-	    while (antallBiler < listeBiler) {
-		if (f.hasNextLine()) {
-		    nyBil = f.next();
-		    nyBilTakst = f.nextInt();
-		    Bil b = new Bil(nyBil, nyBilTakst);
-		    bilBeholder.leggInn(nyBil, b);
+			while (antallBiler < listeBiler) {
+				if (f.hasNextLine()) {
+					nyBil = f.next();
+					nyBilTakst = f.nextInt();
+					Bil b = new Bil(nyBil, nyBilTakst);
+					bilBeholder.leggInn(nyBil, b);
 		    //	    	    System.out.println(nyBil);
-		    f.nextLine();
-		    antallBiler++;
-		}
-	    }	
+					f.nextLine();
+					antallBiler++;
+				}
+			}	
 
-	    f.nextLine();
-	    int listeLastebiler = f.nextInt();
+			f.nextLine();
+			int listeLastebiler = f.nextInt();
 
 	    //Lastebiler
-	    while (antallLastebiler < listeLastebiler) {
-		if (f.hasNext()) {
-		    nyLastebil = f.next();
-		    nyLastebilTakst = f.nextInt();
-		    Lastebil b = new Lastebil(nyLastebil, nyLastebilTakst);
-		    bilBeholder.leggInn(nyBil, b);
+			while (antallLastebiler < listeLastebiler) {
+				if (f.hasNext()) {
+					nyLastebil = f.next();
+					nyLastebilTakst = f.nextInt();
+					Lastebil b = new Lastebil(nyLastebil, nyLastebilTakst);
+					bilBeholder.leggInn(nyLastebil, b);
 		    //	    	    System.out.println(nyLastebil);
-		    f.nextLine();
-		    antallLastebiler++;
-		}
-	    }	
+					f.nextLine();
+					antallLastebiler++;
+				}
+			}	
 
-	    
-	    f.nextLine();
-	    int listeBusser = f.nextInt();
+
+			f.nextLine();
+			int listeBusser = f.nextInt();
 
 	    //Busser
-	    while (antallBusser < listeBusser) {
-		if (f.hasNextLine()) {
-		    nyBuss = f.next();
-		    nyBussTakst = f.nextInt();
-		    Buss b = new Buss(nyBuss, nyBussTakst);
-		    bilBeholder.leggInn(nyBil, b);
-		    //	    System.out.println(nyBuss);
-		    //System.out.println("Denne takst: " + nyBussTakst);
-		    f.nextLine();
-		    antallBusser++;
-		}
-	    }
+			while (antallBusser < listeBusser) {
+				if (f.hasNextLine()) {
+					nyBuss = f.next();
+					nyBussTakst = f.nextInt();
+					Buss b = new Buss(nyBuss, nyBussTakst);
+					bilBeholder.leggInn(nyBuss, b);
+		//    	    System.out.println(nyBuss);
+	//	    System.out.println("Denne takst: " + nyBussTakst);
+					f.nextLine();
+					antallBusser++;
+				}
+			}
 
-	    f.close();
+			f.close();
 	    //Lukker scanner.
 
-	} catch (FileNotFoundException e) {
-	    System.out.println("Fil 1 ikke funnet.");
-	    e.printStackTrace();
-	}
-	catch (Exception e) {
-	    System.out.println("Linje 1 ikke funnet.");
-	}
+		} catch (FileNotFoundException e) {
+			System.out.println("Fil 1 ikke funnet.");
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			System.out.println("Linje 1 ikke funnet.");
+		}
 
 
 
-	try {
-	    Scanner b = new Scanner(fil2);
+		try {
+			Scanner b = new Scanner(fil2);
 
-	    String nyEier = null;
-	    String nyBilEid = null;
-	    int antallEierskap = 0;
+			String nyEier = null;
+			String nyBilEid = null;
+			int antallEierskap = 0;
 
-	    b.nextLine();
+			b.nextLine();
 
-	    int eierListe = b.nextInt();
+			int eierListe = b.nextInt();
 	    //  int testTeller = 390;
 
 	    //Eierskap
-	    while (antallEierskap < eierListe) {
-		if (b.hasNextLine()) {
+			while (antallEierskap < eierListe) {
+				if (b.hasNextLine()) {
 
-		    nyBilEid = b.next();
-		    b.skip("  ");
-		    nyEier = b.nextLine();
+					nyBilEid = b.next();
+					b.skip("  ");
+					nyEier = b.nextLine();
 
-		    Person p = personBeholder.hent(nyEier);
-		    Kjoretoy k = bilBeholder.hent(nyBilEid);
-
-		    p.mineBiler.leggInn(nyBilEid, k);
+					Person p = personBeholder.hent(nyEier);
+					Kjoretoy k = bilBeholder.hent(nyBilEid);
+					if (p==null) {
+						System.out.println("Eier ikke funnet.");
+					} else {
+						p.nyttKjoretoy(nyBilEid, k);
+					}
 
 		    //   b.nextLine();
 		    //		    System.out.println("Bil:" + nyBilEid);
 				    //	    System.out.println("Eier:" + nyEier);
-		    antallEierskap++;
+					antallEierskap++;
 		    // testTeller++;
-		}
-	    }
+				}
+			}
 
 
-	    String nyBilReparert = null;
-	    String nyReparasjonAv = null;
-	    int antallReparasjoner = 0;
+			String nyBilReparert = null;
+			String nyReparasjonAv = null;
+			int antallReparasjoner = 0;
 
-	    b.nextLine();
+			b.nextLine();
 
-	    int repListe = b.nextInt();
+			int repListe = b.nextInt();
+	  //  b.nextLine();
 	    //	    int testTeller = 4990;
 
 	    //Reparasjoner
-	    while (antallReparasjoner < repListe) {
-		if (b.hasNextLine()) {
+			while (antallReparasjoner < repListe) {
+				if (b.hasNextLine()) {
 
-		    nyBilReparert = b.next();
-		    b.skip("  ");
-		    nyReparasjonAv= b.nextLine();
+					nyBilReparert = b.next();
+					b.skip("  ");
+					nyReparasjonAv= b.nextLine();
 
-		    Person p = personBeholder.hent(nyReparasjonAv);
-		    Kjoretoy k = bilBeholder.hent(nyBilReparert);
+					Person p = personBeholder.hent(nyReparasjonAv);
+					Kjoretoy k = bilBeholder.hent(nyBilReparert);
 
-		    k.kjoretoyetsReperasjoner.leggInn(nyReparasjonAv, p);
+					if (k != null) {
+						k.kjoretoyetsReperasjoner.leggInn(nyReparasjonAv, p);
+					}
 		    //kjoretoyetsReperasjoner;
 
 		    //   b.nextLine();
-		    	    System.out.println("Bil:" + nyBilReparert);
-		    	    System.out.println("Reppist:" + nyReparasjonAv);
-			    System.out.println("Replist:"+repListe);
-		    antallReparasjoner++;
+		   // 	    System.out.println("Bil:" + nyBilReparert);
+		//    	    System.out.println("Reppist:" + nyReparasjonAv);
+		//	    System.out.println("Replist:"+repListe);
+					antallReparasjoner++;
 		    //	    testTeller++;
+				}
+			}
+
+			b.close();
+
+
+
+		} catch (FileNotFoundException e) {
+			System.out.println("Fil 2 ikke funnet.");
+			e.printStackTrace();
 		}
-	    }
+		catch (Exception e) {
+			System.out.println("Linje 2 ikke funnet.");
+		}
 
-	    b.close();
 
-
-
-	} catch (FileNotFoundException e) {
-	    System.out.println("Fil 2 ikke funnet.");
-	    e.printStackTrace();
 	}
-	catch (Exception e) {
-	    System.out.println("Linje 2 ikke funnet.");
-	}
-
-
-    }
 }
 
 class Filleser {
@@ -283,52 +336,52 @@ class Filleser {
 }
 
 class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
-    int antall = 0;
+	int antall = 0;
 
-    private Lelem forste;
+	private Lelem forste;
 
-    public SELLbeholder() {
+	public SELLbeholder() {
 	//	System.out.println("TEST");//Fikk en kompileringsfeil uten.
-    }
-
-    private class Lelem {
-	Lelem neste;
-	V verdi;
-	N nokkel;
-
-	Lelem(N n, V v) {
-	    nokkel = n;
-	    verdi = v;
-	}
-    }
-
-    public void leggInn(N n, V v) {
-
-	if (forste == null) {
-	    Lelem lel = new Lelem(n, v);
-	    forste = lel;
-	    antall++;
-	    return;
 	}
 
-	if (inneholder(n)) {
-	    return;
+	private class Lelem {
+		Lelem neste;
+		V verdi;
+		N nokkel;
+
+		Lelem(N n, V v) {
+			nokkel = n;
+			verdi = v;
+		}
 	}
+
+	public void leggInn(N n, V v) {
+
+		if (forste == null) {
+			Lelem lel = new Lelem(n, v);
+			forste = lel;
+			antall++;
+			return;
+		}
+
+		if (inneholder(n)) {
+			return;
+		}
 	//beholder disse - pilhode
-	if (antall==1) {
-	    Lelem lel = new Lelem(n, v);
-	    if (lel.nokkel.compareTo(forste.nokkel) > 0) {
-		forste.neste = lel;
-		antall++;
-		return;
-	    } else {
-		Lelem tmp1 = forste;
-		forste = lel;
-		forste.neste = tmp1;
-		antall++;
-		return;
-	    }
-	} 
+		if (antall==1) {
+			Lelem lel = new Lelem(n, v);
+			if (lel.nokkel.compareTo(forste.nokkel) > 0) {
+				forste.neste = lel;
+				antall++;
+				return;
+			} else {
+				Lelem tmp1 = forste;
+				forste = lel;
+				forste.neste = tmp1;
+				antall++;
+				return;
+			}
+		} 
 
 	//Hvis antall er storre enn 1...
 
@@ -337,141 +390,141 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 	for (Lelem en = forste; en!=null; en=en.neste) {
 
 	    //Legger inn denne for aa kontrollere forste bortsett fra ved forstelesing som skjer over naar antall er 1.
-	    if(lel.nokkel.compareTo(forste.nokkel) == 0 && lel.nokkel.compareTo(forste.nokkel) < 0) {
-		Lelem tmp1 = forste;
-		forste = lel;
-		lel.neste = tmp1;
-		antall++;
-		return;
-	    }
-
-	    if (en.neste != null) {
-
-		if (lel.nokkel.compareTo(en.nokkel) > 0 && lel.nokkel.compareTo(en.neste.nokkel) < 0) {
-		    Lelem tmp1 = en.neste;
-		    en.neste = lel;
-		    lel.neste = tmp1;
-		    antall++;
-		    return;
-
+		if(lel.nokkel.compareTo(forste.nokkel) == 0 && lel.nokkel.compareTo(forste.nokkel) < 0) {
+			Lelem tmp1 = forste;
+			forste = lel;
+			lel.neste = tmp1;
+			antall++;
+			return;
 		}
 
-	    } else {
+		if (en.neste != null) {
 
-		if (lel.nokkel.compareTo(en.nokkel) > 0) {
-		    en.neste = lel;
-		    antall++;
+			if (lel.nokkel.compareTo(en.nokkel) > 0 && lel.nokkel.compareTo(en.neste.nokkel) < 0) {
+				Lelem tmp1 = en.neste;
+				en.neste = lel;
+				lel.neste = tmp1;
+				antall++;
+				return;
+
+			}
+
+		} else {
+
+			if (lel.nokkel.compareTo(en.nokkel) > 0) {
+				en.neste = lel;
+				antall++;
+			}
+
 		}
-
-	    }
 
 	}
 
-    }
+}
 
-    public int antall() {
+public int antall() {
 	return antall;
-    }
+}
 
-    public V hent(N n)  {
+public V hent(N n)  {
 	for (Lelem en = forste; en!=null; en=en.neste) {
-	    if (en.nokkel.compareTo(n) == 0) {
+		if (en.nokkel.compareTo(n) == 0) {
 		return en.verdi;//Eller nokkel?
-	    } 
-	}
-	return null;
-    }
+	} 
+}
+return null;
+}
 
-    public V hent(int nr) {
+public V hent(int nr) {
 	int teller = 0;
 	if (nr > antall) {
-	    return null;
+		return null;
 	}
 	for (Lelem en = forste; en!=null; en=en.neste) {
-	    teller++; 
-	    if (teller == nr) {
-		return en.verdi;
-	    }
+		teller++; 
+		if (teller == nr) {
+			return en.verdi;
+		}
 	}
 	return null;
-    }
+}
 
-    public V hentMinste() {
+public V hentMinste() {
 	if (forste != null) {
-	    return forste.verdi;
+		return forste.verdi;
 	} else {
-	    return null;
+		return null;
 	}
-    }
+}
 
-    public V hentStorste() {
+public V hentStorste() {
 	for (Lelem en = forste; en!=null; en=en.neste) {
-	    if (en.neste == null) {
-		return en.verdi;
-	    }
+		if (en.neste == null) {
+			return en.verdi;
+		}
 	}
 	return null;
-    }
+}
 
-    public boolean inneholder(N n) {
+public boolean inneholder(N n) {
 	for (Lelem en = forste; en!=null; en=en.neste) {
-	    if (en.nokkel.compareTo(n) == 0) {
-		return true;
-	    } 
+		if (en.nokkel.compareTo(n) == 0) {
+			return true;
+		} 
 	}
 	return false;//....
-    }
+}
 
-    public boolean fjernElement(N n) {
+public boolean fjernElement(N n) {
 	if (inneholder(n)) {
 	    //Hvis forste skal ut. Kast ut forste.
-	    if (forste.nokkel.compareTo(n) == 0) {
-		forste = forste.neste;
-		antall--;
-		return true;
-	    }
+		if (forste.nokkel.compareTo(n) == 0) {
+			forste = forste.neste;
+			antall--;
+			return true;
+		}
 	    //Hvis ikke...
-	    for (Lelem en = forste; en!=null; en=en.neste) {
-		if(en.neste.nokkel.compareTo(n) == 0) {
+		for (Lelem en = forste; en!=null; en=en.neste) {
+			if(en.neste.nokkel.compareTo(n) == 0) {
 		    en.neste = en.neste.neste;//Hvis det er den siste som fjernes, resirkuleres dens null til den sistemann.
 		    antall--;
 		    return true;
 		} 
-	    }
 	}
-	return false;
-    }
+}
+return false;
+}
 
-    public void fjernAlle() {
+public void fjernAlle() {
 
 	if (forste==null) {
-	    return;
+		return;
 	}
 
 	forste=null;
 	antall=0;
 
 	return;
-    }
+}
 
-    public V[] tilArray(V[] a) {
+public V[] tilArray(V[] a) {
 	if (forste==null) {
-	    return null;
+		return null;
 	}
 	int aTeller=0;
 	for (Lelem en = forste; en!=null; en=en.neste) {
-	    a[aTeller] = en.verdi;
-	    aTeller++;
+		a[aTeller] = en.verdi;
+		aTeller++;
 	}
 	return a;
-    }
+}
 
-    public Iterator iterator() {
+public Iterator iterator() {
 	return new SingelIterator();
-    }
+}
 
     //Iterator ferdig og fungerende.
-    class SingelIterator implements Iterator<V> {
+class SingelIterator implements Iterator<V> {
 
 	Lelem neste;
 	Lelem forrige;
@@ -479,347 +532,329 @@ class SELLbeholder<N extends Comparable<N> , V> implements INF1010samling<N,V> {
 	boolean start = true;
 
 	SingelIterator() {
-	    neste=null;
+		neste=null;
 	}
 	public V next() {
-	    if (start) {
-		start = false;
-	        neste = forste.neste;
-		return forste.verdi;
-	    }
+		if (start) {
+			start = false;
+			neste = forste.neste;
+			return forste.verdi;
+		}
 
-	    if (neste == null) {
-		throw new NoSuchElementException();
-	    }
+		if (neste == null) {
+			throw new NoSuchElementException();
+		}
 
-	    fjernet = false;
-	    forrige = neste;
-	    neste = neste.neste;
-	    return forrige.verdi;
+		fjernet = false;
+		forrige = neste;
+		neste = neste.neste;
+		return forrige.verdi;
 	}
 
 	public boolean hasNext() {
-	    if (start) {
-		return (forste != null);
-	    }
-	    return (neste != null);
+		if (start) {
+			return (forste != null);
+		}
+		return (neste != null);
 	}
 
 	public void remove() {
-	    if (start) {
-		throw new IllegalStateException();
-	    }
-	    
-	    if (fjernet == false) {
-		if (forrige==null) {
-		    fjernElement(forste.nokkel);
-		    fjernet = true;
-		    return;
+		if (start) {
+			throw new IllegalStateException();
 		}
-		fjernElement(forrige.nokkel);
-	    }
-	    fjernet = true;
+
+		if (fjernet == false) {
+			if (forrige==null) {
+				fjernElement(forste.nokkel);
+				fjernet = true;
+				return;
+			}
+			fjernElement(forrige.nokkel);
+		}
+		fjernet = true;
 
 	}
-    }
+}
 
 }
 
 class Person {
-    private String navn;
-    boolean mekaniker = false;
-    SELLbeholder<String, Kjoretoy> mineBiler;
+	private String navn;
+	boolean mekaniker = false;
+	SELLbeholder<String, Kjoretoy> mineBiler;
 
-    Person(String navn) {
-	mineBiler = new SELLbeholder<String, Kjoretoy>();
-	this.navn = navn;
-    }
+	Person(String navn) {
+		this.navn = navn;
+	}
 
-    public String hentNavn() {
-	return navn;
-    }
+	public String hentNavn() {
+		return navn;
+	}
 
-    public boolean eierJegBil () {
-	return (mineBiler.antall() >= 1);
-	//Jeg tror ikke dette er greit utifra oppgaveteksten, 
-	//men med daarlig tid og litt usikkerhet maa jeg gjore dette i starten. 
-	//Om jeg ikke rekker mer blir det saann som dette.
-    }
+	public boolean eierJegBil () {
+		return (mineBiler!=null);
+	}
 
-    public boolean ulovligEgenReperasjon () {
-	if (mekaniker) {
-	    return false;
-	} else {
-	    for (Kjoretoy b: mineBiler) {
-
-		for (Person p: b.kjoretoyetsReperasjoner) {
-
-		    if (b.kjoretoyetsReperasjoner.inneholder(hentNavn())) {
-			return true;
-		    }
-
+	public void nyttKjoretoy(String regNr, Kjoretoy k) {
+		if (mineBiler == null) {
+			mineBiler = new SELLbeholder<String, Kjoretoy>();
 		}
 
-	    }
-	    return false;
+		mineBiler.leggInn(regNr, k);
 	}
-    }
+
+	public boolean ulovligEgenReperasjon () {
+		if (mekaniker) {
+			return false;
+		} else {
+			if (eierJegBil()) {
+				for (Kjoretoy b: mineBiler) {
+				if (b.antallReparasjoner() != 0) {
+
+					for (Person p: b.kjoretoyetsReperasjoner) {
+
+						if (b.kjoretoyetsReperasjoner.inneholder(hentNavn())) {
+							return true;
+						}
+
+					}
+				}
+				}
+
+			}
+			return false;
+		}
+	}
 
 }
 
 
-    class Mekaniker extends Person {
+class Mekaniker extends Person {
 
 	SELLbeholder<String, Kjoretoy> gjennomforteReperasjoner;
-	boolean mekaniker = true;
 
 	Mekaniker(String navn) {
-	    super(navn);
-	    gjennomforteReperasjoner = new SELLbeholder<String, Kjoretoy>();
+		super(navn);
+		mekaniker = true;
+		gjennomforteReperasjoner = new SELLbeholder<String, Kjoretoy>();
 	}
 
-	public boolean eierJegBil () {
-	    return (mineBiler.antall() >= 1);
-	    //Jeg tror ikke dette er greit utifra oppgaveteksten, 
-	    //men med daarlig tid og litt usikkerhet maa jeg gjore dette i starten. 
-	    //Om jeg ikke rekker mer blir det saann som dette.
-	}
-
-	public boolean ulovligEgenReperasjon () {
-	    if (mekaniker) {
-		return false;
-	    } else {
-		for (Kjoretoy b: mineBiler) {
-
-		    for (Person p: b.kjoretoyetsReperasjoner) {
-
-			if (b.kjoretoyetsReperasjoner.inneholder(hentNavn())) {
-			    return true;
-			}
-
-		    }
-
-		}
-		return false;
-	    }
-	}
-
-    }
+}
 
 abstract class Kjoretoy {
 
-    String regNr;
-    double takst;
-    double avgift = 0.5;
-    SELLbeholder<String, Person> kjoretoyetsReperasjoner;
+	String regNr;
+	double takst;
+	double avgift = 0.5;
+	SELLbeholder<String, Person> kjoretoyetsReperasjoner;
 
-    Kjoretoy(String regNr, double takst) {
-	this.regNr = regNr;
-	this.takst = takst;
-        kjoretoyetsReperasjoner = new SELLbeholder<String, Person>();
-    }
+	Kjoretoy(String regNr, double takst) {
+		this.regNr = regNr;
+		this.takst = takst;
+		kjoretoyetsReperasjoner = new SELLbeholder<String, Person>();
+	}
 
-    double avgift() {
-	return takst*0.05;
-    }
+		int antallReparasjoner() {
+		return kjoretoyetsReperasjoner.antall();
+	}
+
+	double avgift() {
+		return takst*0.05;
+	}
 }
 
 class Bil extends Kjoretoy {
 
-    SELLbeholder<String, Person> kjoretoyetsReperasjoner;
+	SELLbeholder<String, Person> kjoretoyetsReperasjoner;
 
-    Bil(String regNr, double takst) {
-	super(regNr, takst);
-	kjoretoyetsReperasjoner = new SELLbeholder<String, Person>();
+	Bil(String regNr, double takst) {
+		super(regNr, takst);
+		kjoretoyetsReperasjoner = new SELLbeholder<String, Person>();
 	//Biler 7,5% hvis bare mekanikere over halvparten av gangene, 10% hvis ikke
-    }
-
-    int antallReparasjoner() {
-	return kjoretoyetsReperasjoner.antall();
-    }
-
-    boolean harMekGjortMest () {
-	int mekTeller = 0;
-	int pTeller = 0;
-	for (Person p: kjoretoyetsReperasjoner) {
-	    if (p.mekaniker) {
-		mekTeller++;
-	    }
-	    if (!p.mekaniker) {
-		pTeller++;
-	    }
-	}
-	int totalDelt = mekTeller+pTeller/2;
-
-	if (mekTeller > totalDelt) {
-	    return true;
-	} else {
-	    return false;
-	}
-    }
-
-    boolean harMekGjortAlt () {
-	int mekTeller = 0;
-	int pTeller = 0;
-	for (Person p: kjoretoyetsReperasjoner) {
-	    if (p.mekaniker) {
-		mekTeller++;
-	    }
-	    if (!p.mekaniker) {
-		pTeller++;
-	    }
 	}
 
-	if (pTeller == 0) {
-	    return true;
-	} 
-	return false;
-    }
+	boolean harMekGjortMest () {
+		int mekTeller = 0;
+		int pTeller = 0;
+		for (Person p: kjoretoyetsReperasjoner) {
+			if (p.mekaniker) {
+				mekTeller++;
+			}
+			if (!p.mekaniker) {
+				pTeller++;
+			}
+		}
+		int totalDelt = mekTeller+pTeller/2;
 
-    double avgift() {
-	if (kjoretoyetsReperasjoner.antall() == 0) {
-	    return takst*0.05;
-	}  
-	if (harMekGjortAlt()) {
-	    return takst*0.05;
+		if (mekTeller > totalDelt) {
+			return true;
+		} else {
+			return false;
+		}
 	}
-	if (harMekGjortMest()) {
-	    return takst*0.075;
+
+	boolean harMekGjortAlt () {
+		int mekTeller = 0;
+		int pTeller = 0;
+		for (Person p: kjoretoyetsReperasjoner) {
+			if (p.mekaniker) {
+				mekTeller++;
+			}
+			if (!p.mekaniker) {
+				pTeller++;
+			}
+		}
+
+		if (pTeller == 0) {
+			return true;
+		} 
+		return false;
 	}
-	return takst*0.10;
-    }
+
+	double avgift() {
+		if (kjoretoyetsReperasjoner.antall() == 0) {
+			return takst*0.05;
+		}  
+		if (harMekGjortAlt()) {
+			return takst*0.05;
+		}
+		if (harMekGjortMest()) {
+			return takst*0.075;
+		}
+		return takst*0.10;
+	}
 }
 
 class Lastebil extends Kjoretoy {
 
-    SELLbeholder<String, Person> kjoretoyetsReperasjoner;
+	SELLbeholder<String, Person> kjoretoyetsReperasjoner;
 
-    Lastebil(String regNr, double takst) {
-	super(regNr, takst);
-	kjoretoyetsReperasjoner = new SELLbeholder<String, Person>();
+	Lastebil(String regNr, double takst) {
+		super(regNr, takst);
+		kjoretoyetsReperasjoner = new SELLbeholder<String, Person>();
 	//3,4% av taksten hvis bare mekanikere eller ikke, hvis ikke, 12%.
-    }
-
-    int antallReparasjoner() {
-	return kjoretoyetsReperasjoner.antall();
-    }
-
-    boolean harMekGjortMest () {
-	int mekTeller = 0;
-	int pTeller = 0;
-	for (Person p: kjoretoyetsReperasjoner) {
-	    if (p.mekaniker) {
-		mekTeller++;
-	    }
-	    if (!p.mekaniker) {
-		pTeller++;
-	    }
-	}
-	int totalDelt = mekTeller+pTeller/2;
-
-	if (mekTeller > totalDelt) {
-	    return true;
-	} else {
-	    return false;
-	}
-    }
-
-    boolean harMekGjortAlt () {
-	int mekTeller = 0;
-	int pTeller = 0;
-	for (Person p: kjoretoyetsReperasjoner) {
-	    if (p.mekaniker) {
-		mekTeller++;
-	    }
-	    if (!p.mekaniker) {
-		pTeller++;
-	    }
 	}
 
-	if (pTeller == 0) {
-	    return true;
-	} 
-	return false;
-    }
-
-    double avgift() {
-	if (kjoretoyetsReperasjoner.antall() == 0) {
-	    return takst*0.034;
-	}  
-	if (harMekGjortAlt()) {
-	    return takst*0.034;
+	int antallReparasjoner() {
+		return kjoretoyetsReperasjoner.antall();
 	}
+
+	boolean harMekGjortMest () {
+		int mekTeller = 0;
+		int pTeller = 0;
+		for (Person p: kjoretoyetsReperasjoner) {
+			if (p.mekaniker) {
+				mekTeller++;
+			}
+			if (!p.mekaniker) {
+				pTeller++;
+			}
+		}
+		int totalDelt = mekTeller+pTeller/2;
+
+		if (mekTeller > totalDelt) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	boolean harMekGjortAlt () {
+		int mekTeller = 0;
+		int pTeller = 0;
+		for (Person p: kjoretoyetsReperasjoner) {
+			if (p.mekaniker) {
+				mekTeller++;
+			}
+			if (!p.mekaniker) {
+				pTeller++;
+			}
+		}
+
+		if (pTeller == 0) {
+			return true;
+		} 
+		return false;
+	}
+
+	double avgift() {
+		if (kjoretoyetsReperasjoner.antall() == 0) {
+			return takst*0.034;
+		}  
+		if (harMekGjortAlt()) {
+			return takst*0.034;
+		}
 	// if (harMekGjortMest()) {
 	//     return takst*0.075;
 	// }
-	return takst*0.12;
-    }
+		return takst*0.12;
+	}
 }
 
 class Buss extends Kjoretoy {
 
-    SELLbeholder<String, Person> kjoretoyetsReperasjoner;
+	SELLbeholder<String, Person> kjoretoyetsReperasjoner;
 
-    Buss(String regNr, double takst) {	
-	super(regNr, takst);
-	
-	kjoretoyetsReperasjoner = new SELLbeholder<String, Person>();
+	Buss(String regNr, double takst) {	
+		super(regNr, takst);
+
+		kjoretoyetsReperasjoner = new SELLbeholder<String, Person>();
 	//3,4% av taksten hvis bare mekanikere eller ikke, hvis ikke, 12%.
-    }
-
-    int antallReparasjoner() {
-	return kjoretoyetsReperasjoner.antall();
-    }
-
-    boolean harMekGjortMest () {
-	int mekTeller = 0;
-	int pTeller = 0;
-	for (Person p: kjoretoyetsReperasjoner) {
-	    if (p.mekaniker) {
-		mekTeller++;
-	    }
-	    if (!p.mekaniker) {
-		pTeller++;
-	    }
-	}
-	int totalDelt = mekTeller+pTeller/2;
-
-	if (mekTeller > totalDelt) {
-	    return true;
-	} else {
-	    return false;
-	}
-    }
-
-    boolean harMekGjortAlt () {
-	int mekTeller = 0;
-	int pTeller = 0;
-	for (Person p: kjoretoyetsReperasjoner) {
-	    if (p.mekaniker) {
-		mekTeller++;
-	    }
-	    if (!p.mekaniker) {
-		pTeller++;
-	    }
 	}
 
-	if (pTeller == 0) {
-	    return true;
-	} 
-	return false;
-    }
-
-    double avgift() {
-	if (kjoretoyetsReperasjoner.antall() == 0) {
-	    return takst*0.034;
-	}  
-	if (harMekGjortAlt()) {
-	    return takst*0.034;
+	int antallReparasjoner() {
+		return kjoretoyetsReperasjoner.antall();
 	}
+
+	boolean harMekGjortMest () {
+		int mekTeller = 0;
+		int pTeller = 0;
+		for (Person p: kjoretoyetsReperasjoner) {
+			if (p.mekaniker) {
+				mekTeller++;
+			}
+			if (!p.mekaniker) {
+				pTeller++;
+			}
+		}
+		int totalDelt = mekTeller+pTeller/2;
+
+		if (mekTeller > totalDelt) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	boolean harMekGjortAlt () {
+		int mekTeller = 0;
+		int pTeller = 0;
+		for (Person p: kjoretoyetsReperasjoner) {
+			if (p.mekaniker) {
+				mekTeller++;
+			}
+			if (!p.mekaniker) {
+				pTeller++;
+			}
+		}
+
+		if (pTeller == 0) {
+			return true;
+		} 
+		return false;
+	}
+
+	double avgift() {
+		if (kjoretoyetsReperasjoner.antall() == 0) {
+			return takst*0.034;
+		}  
+		if (harMekGjortAlt()) {
+			return takst*0.034;
+		}
 	// if (harMekGjortMest()) {
 	//     return takst*0.075;
 	// }
-	return takst*0.12;
-    }
+		return takst*0.12;
+	}
 
 }
